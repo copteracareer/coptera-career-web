@@ -1,7 +1,9 @@
 import React from "react";
 
-const HomeLayout = () => {
-  return <div>HomeLayout</div>;
-};
-
-export default HomeLayout;
+export default function HomeLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return <>{children}</>;
+}

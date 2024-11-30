@@ -18,7 +18,7 @@ export default function Feature() {
             <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
               {/* Icon */}
               <Image
-                src="/icons/career-guidance.png"
+                src=""
                 alt="Career Guidance Icon"
                 className="w-6 h-6"
                 width={24}
@@ -41,7 +41,7 @@ export default function Feature() {
             <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
               {/* Icon */}
               <Image
-                src="/icons/resume-cv.png"
+                src=""
                 alt="Resume Icon"
                 className="w-6 h-6"
                 width={24}
@@ -65,7 +65,7 @@ export default function Feature() {
             <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
               {/* Icon */}
               <Image
-                src="/icons/application-assistance.png"
+                src=""
                 alt="Application Assistance Icon"
                 className="w-6 h-6"
                 width={24}

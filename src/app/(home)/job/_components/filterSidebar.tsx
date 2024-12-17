@@ -2,12 +2,19 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState, useEffect } from "react";
 
+interface Filters {
+  priority: string;
+  jobType: string[];
+  subdistrict: string[];
+  experience: string;
+  remote: boolean;
+}
 export default function FilterSidebar({
   onFilterChange,
 }: {
-  onFilterChange: (filters: any) => void;
+  onFilterChange: (filters: Filters) => void;
 }) {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     priority: "More Relevant",
     jobType: [],
     subdistrict: [],
@@ -42,16 +49,22 @@ export default function FilterSidebar({
     onFilterChange(filters);
   }, [filters, onFilterChange]);
 
-  const handleCheckboxChange = (name: string, value: string) => {
+  const handleCheckboxChange = (name: keyof Filters, value: string) => {
     setFilters((prev) => {
-      const updatedValues = prev[name].includes(value)
-        ? prev[name].filter((item: string) => item !== value)
-        : [...prev[name], value];
-      return { ...prev, [name]: updatedValues };
+      if (Array.isArray(prev[name])) {
+        const updatedValues = prev[name].includes(value)
+          ? prev[name].filter((item) => item !== value)
+          : [...prev[name], value];
+        return { ...prev, [name]: updatedValues };
+      } else {
+        // Handle the case where prev[name] is not an array
+        // For example, you could return the previous state unchanged
+        return prev;
+      }
     });
   };
 
-  const handleExperienceChange = (e: any) => {
+  const handleExperienceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilters((prev) => ({ ...prev, experience: e.target.value }));
   };
 

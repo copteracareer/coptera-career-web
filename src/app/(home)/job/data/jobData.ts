@@ -7,6 +7,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "1 Jt",
+    isRemote: false,
   },
   {
     title: "Frontend Developer",
@@ -15,6 +16,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "10 Jt",
+    isRemote: false,
   },
   {
     title: "Backend Developer",
@@ -23,6 +25,7 @@ export const jobData = [
     type: "Part Time",
     experience: "1-3 Years",
     salary: "6 Jt",
+    isRemote: false,
   },
   {
     title: "UI/UX Designer",
@@ -31,6 +34,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "8 Jt",
+    isRemote: false,
   },
   {
     title: "Project Manager",
@@ -39,6 +43,7 @@ export const jobData = [
     type: "Full Time",
     experience: "5-7 Years",
     salary: "15 Jt",
+    isRemote: false,
   },
   {
     title: "Data Analyst",
@@ -47,6 +52,7 @@ export const jobData = [
     type: "Remote",
     experience: "3-5 Years",
     salary: "12 Jt",
+    isRemote: false,
   },
   {
     title: "DevOps Engineer",
@@ -55,6 +61,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "15 Jt",
+    isRemote: false,
   },
   {
     title: "Mobile App Developer",
@@ -63,6 +70,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "9 Jt",
+    isRemote: false,
   },
   {
     title: "Product Manager",
@@ -71,6 +79,7 @@ export const jobData = [
     type: "Full Time",
     experience: "5-7 Years",
     salary: "18 Jt",
+    isRemote: false,
   },
   {
     title: "QA Engineer",
@@ -79,6 +88,7 @@ export const jobData = [
     type: "Part Time",
     experience: "3-5 Years",
     salary: "7 Jt",
+    isRemote: false,
   },
   {
     title: "Marketing Specialist",
@@ -87,6 +97,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "8 Jt",
+    isRemote: false,
   },
   {
     title: "HR Coordinator",
@@ -95,6 +106,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "7 Jt",
+    isRemote: false,
   },
   {
     title: "System Administrator",
@@ -103,6 +115,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "11 Jt",
+    isRemote: false,
   },
   {
     title: "Technical Writer",
@@ -111,6 +124,7 @@ export const jobData = [
     type: "Part Time",
     experience: "1-3 Years",
     salary: "6 Jt",
+    isRemote: false,
   },
   {
     title: "Machine Learning Engineer",
@@ -119,6 +133,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "14 Jt",
+    isRemote: false,
   },
   {
     title: "Game Developer",
@@ -127,6 +142,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "10 Jt",
+    isRemote: false,
   },
   {
     title: "Cybersecurity Analyst",
@@ -135,6 +151,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "13 Jt",
+    isRemote: false,
   },
   {
     title: "Social Media Manager",
@@ -143,6 +160,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "8 Jt",
+    isRemote: false,
   },
   {
     title: "IT Support Specialist",
@@ -151,6 +169,7 @@ export const jobData = [
     type: "Part Time",
     experience: "1-3 Years",
     salary: "5 Jt",
+    isRemote: false,
   },
   {
     title: "Full Stack Developer",
@@ -159,6 +178,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "12 Jt",
+    isRemote: false,
   },
   {
     title: "SEO Specialist",
@@ -167,6 +187,7 @@ export const jobData = [
     type: "Full Time",
     experience: "1-3 Years",
     salary: "7 Jt",
+    isRemote: false,
   },
   {
     title: "Cloud Engineer",
@@ -175,6 +196,7 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "14 Jt",
+    isRemote: false,
   },
   {
     title: "Business Analyst",
@@ -183,6 +205,7 @@ export const jobData = [
     type: "Full Time",
     experience: "5-7 Years",
     salary: "15 Jt",
+    isRemote: false,
   },
   {
     title: "Customer Support Specialist",
@@ -191,6 +214,7 @@ export const jobData = [
     type: "Part Time",
     experience: "1-3 Years",
     salary: "6 Jt",
+    isRemote: false,
   },
   {
     title: "AR/VR Developer",
@@ -199,5 +223,6 @@ export const jobData = [
     type: "Full Time",
     experience: "3-5 Years",
     salary: "16 Jt",
+    isRemote: false,
   },
 ];

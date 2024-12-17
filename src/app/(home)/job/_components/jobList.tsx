@@ -1,4 +1,4 @@
-import JobCard from "./JobCard";
+import JobCard from "./jobCard";
 
 export default function JobList({ jobs }: { jobs: any[] }) {
   return (

@@ -79,7 +79,7 @@ export default function Navbar() {
                 Tips & Trick
               </NavigationMenuLink>
             </Link>
-            <Link href="/docs" legacyBehavior passHref>
+            <Link href="/accelelator" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Career Accelerator
               </NavigationMenuLink>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
 import { Separator } from "@radix-ui/react-separator";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -8,7 +9,13 @@ const Footer = () => {
       <div className="flex flex-col lg:flex-row justify-between gap-8">
         {/* Left Section */}
         <div className="flex-1">
-          {/* <Image src={Logo} alt="Logo" className="mr-1" /> */}
+          <Image
+            src="/img/logo/secondary.png"
+            alt="Logo"
+            className="mr-1"
+            width={150}
+            height={150}
+          />
           <p className="text-sm mt-5">
             Coptera Career is job vacancy information and <br /> tips & tricks
             for career development.

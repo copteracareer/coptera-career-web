@@ -128,17 +128,22 @@ const CareerSections: React.FC = () => {
 
       {/* Section 4: Kesempatan Menjadi Mentor */}
       <section className="py-16 ">
-        <div className="max-w-6xl bg-gray-600 text-white p-10 rounded-[1rem] mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+        <div
+          className="max-w-6xl bg-gray-600 text-white p-10 rounded-[1rem] mx-auto flex flex-col md:flex-row items-center justify-between gap-8"
+          style={{
+            backgroundImage: "url(/img/figma-assets/cta.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "top",
+          }}
+        >
           <div>
-            <h2 className="text-3xl font-bold  mb-4">
+            <h2 className="text-3xl font-bold mb-4">
               Kesempatan Emas untuk Berbagi!
             </h2>
             <p className="text-lg mb-6">
               Jadi mentor dan bantu generasi baru berkembang.
             </p>
-            <Button className="bg-white text-blue text-base-blue ">
-              Yu Hubungi Kami
-            </Button>
+            <Button className="bg-white text-base-blue">Yu Hubungi Kami</Button>
           </div>
         </div>
       </section>

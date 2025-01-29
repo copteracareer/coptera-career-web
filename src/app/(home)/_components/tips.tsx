@@ -7,25 +7,25 @@ const Tips = () => {
     {
       title: "Tips for answering questions about advantages and disadvantages",
       date: "2024, 10 February",
-      imageUrl: "https://via.placeholder.com/800x400", // Placeholder image
+      imageUrl: "/img/product1.png", // Placeholder image
       href: "/tips/tip1",
     },
     {
       title: "Create a more structured CV",
       date: "2024, 10 February",
-      imageUrl: "https://via.placeholder.com/400x200", // Placeholder image
+      imageUrl: "/img/product2.png", // Placeholder image
       href: "/tips/tip2",
     },
     {
       title: "What's in a UI/UX Design portfolio?",
       date: "2024, 10 February",
-      imageUrl: "https://via.placeholder.com/400x200", // Placeholder image
+      imageUrl: "/img/product3.png", // Placeholder image
       href: "/tips/tip3",
     },
     {
       title: "Tips for answering questions about advantages and disadvantages",
       date: "2024, 10 February",
-      imageUrl: "https://via.placeholder.com/400x200", // Placeholder image
+      imageUrl: "/img/product4.png", // Placeholder image
       href: "/tips/tip4",
     },
   ];

@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <div className="bg-white">
       <Hero />
-      <Feature />
+      {/* <Feature /> */}
       <Categories />
       <Jobs />
       <Tips />

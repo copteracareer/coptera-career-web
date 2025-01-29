@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 const ProductSection = () => {
   const products = [
@@ -52,9 +53,11 @@ const ProductSection = () => {
                   ))}
                 </ul>
 
-                <Button className="bg-blue-500 hover:bg-blue-600 text-white">
-                  {product.buttonText}
-                </Button>
+                <Link href={"/accelelator/packet"}>
+                  <Button className="bg-blue-500 hover:bg-blue-600 text-white mt-6">
+                    {product.buttonText}
+                  </Button>
+                </Link>
               </div>
 
               <div className="lg:w-1/2">

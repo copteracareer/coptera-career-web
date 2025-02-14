@@ -1,15 +1,15 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { JobVacancy } from "@/model/job";
 
 const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
 
 /**
- * Retrieve a list of all job vacancies from the Coptera API
- *
- * @returns A promise that resolves to an AxiosResponse containing the list of job vacancies
+ * Mengambil daftar pekerjaan dari API Coptera
  */
-const getJobVacancies = async (): Promise<AxiosResponse<JobVacancy[]>> => {
-  return axios.get<JobVacancy[]>(`${apiUrl}/api/job-vacancy`);
+const getJobVacancies = async (): Promise<JobVacancy[]> => {
+  const response = await axios.get(`${apiUrl}/api/job-vacancy`);
+  // Mengembalikan array langsung dari response
+  return response?.data?.data?.data || [];
 };
 
 export default getJobVacancies;

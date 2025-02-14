@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import FilterSidebar from "./_components/filterSidebar";
 import SearchBar from "./_components/searchBar";
 import JobList from "./_components/jobList";
@@ -8,36 +8,44 @@ import { JobVacancy } from "@/model/job";
 
 export default function Home() {
   const [filteredJobs, setFilteredJobs] = useState<JobVacancy[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // Ambil data pekerjaan
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await getJobVacancies();
+        // Mendapatkan data pekerjaan
+        const jobs = await getJobVacancies();
 
-        // Mengakses data pekerjaan yang benar
-        const jobs = response?.data?.data?.data || []; // Perbaiki akses data pekerjaan
+        console.log("Response jobs:", jobs); // Debug: Cek response
 
-        // Pastikan data sesuai dengan struktur yang diharapkan
-        const formattedJobs = jobs.map((job: JobVacancy) => ({
-          id: job.id,
-          title: job.title,
-          company: job.company?.name || "Unknown Company",
-          location: job.city?.name || "Unknown Location",
-          type: job.work_type || "Unknown",
-          experience: job.requirement || "Not specified",
-          salary: job.jobVacancySalary?.amount || "Negotiable",
-        }));
+        // Pastikan data yang diterima adalah array
+        if (Array.isArray(jobs)) {
+          // Memformat data sesuai dengan yang diperlukan
+          const formattedJobs = jobs.map((job: JobVacancy) => ({
+            id: job.id,
+            title: job.title,
+            company: job.company?.name || "Unknown Company",
+            location: job.city?.name || "Unknown Location",
+            type: job.work_type || "Unknown",
+            experience: job.requirement || "Not specified",
+            salary: job.jobVacancySalary?.amount || "Negotiable",
+          }));
 
-        setFilteredJobs(formattedJobs);
+          // Set filteredJobs dengan data yang sudah diformat
+          setFilteredJobs(formattedJobs);
+        } else {
+          console.error("Data yang diterima bukan array:", jobs);
+        }
       } catch (error) {
-        console.error("Failed to fetch jobs:", error);
+        console.error("Gagal mengambil data pekerjaan:", error);
       }
     };
 
     fetchJobs();
   }, []);
 
+  // Menangani perubahan filter
   const handleFilterChange = useCallback(
     (newFilters: any) => {
       const filtered = filteredJobs.filter(
@@ -54,6 +62,7 @@ export default function Home() {
     [filteredJobs]
   );
 
+  // Menangani pencarian pekerjaan
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     const filtered = filteredJobs.filter((job) =>

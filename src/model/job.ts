@@ -25,7 +25,7 @@ export interface JobVacancy {
   is_closed: boolean;
   company: Company;
   city: City;
-  jobVacancyFacilities: JobVacancyFacility[];
+  jobVacancyFacilities: any[]; // Sesuaikan jika ada
   jobVacancySalary: JobVacancySalary | null;
   category: string;
   type: string;

@@ -1,0 +1,20 @@
+export type User = {
+  id: string;
+  created_at: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  gender: string;
+  date_of_birth: string;
+  address: string;
+  image: unknown | string;
+  talent: string;
+  company_background: string;
+  education_background: string;
+  total_application: number;
+  career_guidance: number;
+  phone_number: string;
+  resume: boolean;
+  assistance_apply: boolean;
+  status: boolean;
+};

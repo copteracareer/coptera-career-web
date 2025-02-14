@@ -1,3 +1,20 @@
+export interface Job {
+  id: number;
+  work_type: string;
+  title: string;
+  due_date: Date | null;
+  description: string;
+  link: string;
+  is_closed: boolean;
+  company: Company;
+  city: City;
+  jobVacancyFacilities: JobVacancyFacility[];
+  jobVacancySalary: JobVacancySalary | null;
+  category: string;
+  type: string;
+  requirement: string;
+}
+
 export interface JobVacancy {
   id: number;
   work_type: string;
@@ -10,6 +27,9 @@ export interface JobVacancy {
   city: City;
   jobVacancyFacilities: JobVacancyFacility[];
   jobVacancySalary: JobVacancySalary | null;
+  category: string;
+  type: string;
+  requirement: string;
 }
 
 export interface Company {
@@ -18,9 +38,11 @@ export interface Company {
   brand: string;
   description: string;
   address: string;
+  type: string;
   image: string;
   web: string;
   company_size: string;
+  total_position: string;
   is_verified: boolean;
   is_partner: boolean;
 }

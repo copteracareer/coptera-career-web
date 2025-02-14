@@ -9,7 +9,7 @@ const HomePage = () => {
     <div className="bg-white">
       <Hero />
       {/* <Feature /> */}
-      <Categories />
+      {/* <Categories /> */}
       <Jobs />
       <Tips />
     </div>

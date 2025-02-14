@@ -29,7 +29,7 @@ export default function Home() {
             location: job.city?.name || "Unknown Location",
             type: job.work_type || "Unknown",
             experience: job.requirement || "Not specified",
-            salary: job.jobVacancySalary?.amount || "Negotiable",
+            salary: job.jobVacancySalary?.salary || "Negotiable",
           }));
 
           // Set filteredJobs dengan data yang sudah diformat

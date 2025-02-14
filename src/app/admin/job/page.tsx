@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -39,20 +39,21 @@ const Job = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const jobs = await getJobVacancies();
-        setJobs(jobs?.data?.data?.data);
-      } catch (error) {
-        console.error("Failed to fetch jobs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    // setLoading(false);
-    fetchJobs();
+  // ✅ Menggunakan useCallback untuk memastikan fungsi tidak berubah di setiap render
+  const fetchJobs = useCallback(async () => {
+    try {
+      const response = await getJobVacancies();
+      setJobs(response?.data?.data?.data || []);
+    } catch (error) {
+      console.error("Failed to fetch jobs:", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
 
   const handleExportButtonClick = () => {
     console.log("Export button clicked");
@@ -75,38 +76,30 @@ const Job = () => {
   const handleDeleteJob = async (id: string) => {
     try {
       await jobApi.jobDelete(id);
-      setJobs(jobs.filter((job) => job.id !== id));
+      setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
     } catch (error) {
       console.error("Failed to delete job:", error);
     }
   };
 
-  const columns: ColumnDef<Job>[] = [
+  const handleStatusChange = async (job: JobVacancy, newStatus: boolean) => {
+    try {
+      // Simulasi API Update Status Job
+      await jobApi.updateJobStatus(job.id, newStatus);
+      setJobs((prevJobs) =>
+        prevJobs.map((j) =>
+          j.id === job.id ? { ...j, is_closed: newStatus } : j
+        )
+      );
+    } catch (error) {
+      console.error("Failed to update job status:", error);
+    }
+  };
+
+  const columns: ColumnDef<JobVacancy>[] = [
     {
       accessorKey: "id",
-      header: ({ table, column }) => (
-        <div className="flex items-center gap-5">
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label="Select all"
-          />
-
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Job ID
-            <ChevronsUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      ),
+      header: "Job ID",
       cell: ({ row }) => (
         <div className="flex items-center gap-5">
           <Checkbox
@@ -114,130 +107,65 @@ const Job = () => {
             onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
           />
-
-          <div className="">{row.getValue("id")}</div>
+          {row.getValue("id")}
         </div>
       ),
     },
     {
       accessorKey: "title",
-      id: "title",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Job title
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
+      header: "Job Title",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("title")}</div>
       ),
-      filterFn: (row, columnId, value) => {
-        const jobName = `${row.getValue("title")}`.toLowerCase();
-        return jobName.includes(value.toLowerCase());
-      },
     },
     {
       accessorKey: "brand",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Brand
-            <ChevronsUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: "Brand",
       cell: ({ row }) => (
         <div className="lowercase">{row.original.company?.brand}</div>
       ),
     },
     {
       accessorKey: "type",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Type
-            <ChevronsUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: "Type",
       cell: ({ row }) => (
         <div className="lowercase">{row.original.work_type}</div>
       ),
     },
     {
       accessorKey: "total_position",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Total Position
-            <ChevronsUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+      header: "Total Position",
       cell: ({ row }) => (
         <div className="lowercase">{row.getValue("total_position")}</div>
       ),
     },
     {
       accessorKey: "is_closed",
-      header: ({ column }) => <div className="text-center">Status Job</div>,
+      header: "Status Job",
       cell: ({ row }) => {
-        const [status, setStatus] = useState(
-          row.getValue("is_closed") === true
-        );
-
-        const handleStatusChange = async (checked: boolean) => {
-          setStatus(checked);
-
-          // Dummy function untuk mensimulasikan update status ke server
-        };
-
+        const job = row.original;
         return (
           <div className="flex items-center justify-center">
             <Switch
-              // checked={status}
-              // onCheckedChange={handleStatusChange}
+              checked={job.is_closed}
+              onCheckedChange={(checked) => handleStatusChange(job, checked)}
               className="text-center"
-              id={`switch-${row.original.id}`}
+              id={`switch-${job.id}`}
             />
           </div>
         );
       },
-      filterFn: (row, columnId, value) => {
-        if (value === "active") return row.original.status === true;
-        if (value === "inactive") return row.original.status === false;
-        return true;
-      },
     },
     {
       id: "action",
-      // enableHiding: false,
-      header: () => <div className="text-center">Action</div>,
+      header: "Action",
       cell: ({ row }) => {
         const job = row.original;
-
         return (
           <div className="flex items-center justify-center">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -248,10 +176,8 @@ const Job = () => {
                     setIsSheetOpen(true);
                   }}
                 >
-                  <div className="flex items-center">
-                    <FileSearch2 className="w-4 h-4 mr-2" />
-                    View Details
-                  </div>
+                  <FileSearch2 className="w-4 h-4 mr-2" />
+                  View Details
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
@@ -276,22 +202,9 @@ const Job = () => {
     },
     {
       accessorKey: "created_at",
-      id: "created_atVissible",
       header: "Created At",
-      filterFn: (row, columnId, value) => {
-        const created_at = new Date(row.original.created_at).getTime();
-        const currentDate = new Date().getTime();
-
-        if (value === "newest") {
-          return created_at > currentDate - 10 * 24 * 60 * 60 * 1000; // 10 hari terakhir
-        }
-
-        if (value === "latest") {
-          return created_at <= currentDate;
-        }
-
-        return true;
-      },
+      cell: ({ row }) =>
+        new Date(row.getValue("created_at")).toLocaleDateString(),
     },
   ];
 

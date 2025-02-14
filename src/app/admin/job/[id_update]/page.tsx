@@ -9,7 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { FormFieldConfig } from "../../_components/form/FormFieldComponent";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { Job } from "@/model/job";
 import jobApi from "@/utils/api/job";
 
@@ -28,15 +28,13 @@ const FormSchema = z.object({
   requirement: z.string(),
   linkedin: z.string(),
   created_at: z.string(),
-  img: z.string().url(), // URL gambar
+  img: z.string().url(),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
 
 const UpdateJob = ({ params }: { params: { id_update: string } }) => {
   const router = useRouter();
-  const [job, setJob] = useState<Job | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const methods = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -44,20 +42,16 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
 
   const { reset } = methods;
 
-  // Fetch job data menggunakan useCallback agar tetap stabil di dependency array useEffect
+  // Fetch job data
   const fetchJob = useCallback(async () => {
     try {
       const jobData = await jobApi.job(params.id_update);
-      setJob(jobData);
       reset(jobData);
     } catch (error) {
       console.error("Failed to fetch job:", error);
-    } finally {
-      setLoading(false);
     }
   }, [params.id_update, reset]);
 
-  // Panggil fetchJob saat komponen di-mount
   useEffect(() => {
     fetchJob();
   }, [fetchJob]);
@@ -74,7 +68,6 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
     router.push("/admin/job");
   };
 
-  // Konfigurasi formulir
   const sections: Array<{
     title: string;
     fields: Array<FormFieldConfig | FormFieldConfig[]>;
@@ -163,7 +156,6 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
     },
   ];
 
-  // Konfigurasi tombol
   const button: ButtonConfig[] = [
     { label: "Cancel", onClick: handleCancelButton, variant: "outline" },
     { label: "Update Job", onClick: methods.handleSubmit(onSubmit) },

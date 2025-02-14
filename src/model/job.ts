@@ -30,6 +30,7 @@ export interface JobVacancy {
   category: string;
   type: string;
   requirement: string;
+  experience: string;
 }
 
 export interface Company {

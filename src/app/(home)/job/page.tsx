@@ -8,16 +8,18 @@ import { JobVacancy } from "@/model/job";
 
 export default function Home() {
   const [filteredJobs, setFilteredJobs] = useState<JobVacancy[]>([]);
-  const [setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await getJobVacancies();
-        const jobs = response?.data?.data?.data || [];
+
+        // Mengakses data pekerjaan yang benar
+        const jobs = response?.data?.data?.data || []; // Perbaiki akses data pekerjaan
 
         // Pastikan data sesuai dengan struktur yang diharapkan
-        const formattedJobs = jobs.map((job: any) => ({
+        const formattedJobs = jobs.map((job: JobVacancy) => ({
           id: job.id,
           title: job.title,
           company: job.company?.name || "Unknown Company",

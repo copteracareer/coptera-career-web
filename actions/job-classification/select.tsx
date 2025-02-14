@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { JobClassification } from "./get";
 
 const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
 

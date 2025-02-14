@@ -41,7 +41,13 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-const CreateJob = ({ params }: { params: { id_update: string } }) => {
+type PageProps = {
+  params: { id_update: string };
+};
+
+const CreateJob = ({ params }: PageProps) => {
+  const { id_update } = params; // Access the dynamic parameter from URL
+
   const [companies, setCompanies] = useState<Company[]>([]);
   const [jobExperiences, setJobExperiences] = useState<JobExperience[]>([]);
   const [jobClassifications, setJobClassifications] = useState<[]>([]);
@@ -64,7 +70,6 @@ const CreateJob = ({ params }: { params: { id_update: string } }) => {
   const fetchJobExperiences = async () => {
     try {
       const jobExperiences = await getJobExperience();
-      console.log("jobExperiences", jobExperiences);
       const jobExperiencesOptions = jobExperiences?.data?.data?.data.map(
         (jobExperience) => ({
           value: String(jobExperience.id),
@@ -80,7 +85,6 @@ const CreateJob = ({ params }: { params: { id_update: string } }) => {
   const fetchJobClassifications = async () => {
     try {
       const jobClassifications = await getJobClassification();
-      console.log("jobClassifications", jobClassifications);
       const jobClassificationsOptions =
         jobClassifications?.data?.data?.data.map((jobClassification) => ({
           value: String(jobClassification.id),
@@ -95,7 +99,6 @@ const CreateJob = ({ params }: { params: { id_update: string } }) => {
   const fetchWorkTypes = async () => {
     try {
       const workTypes = await getWorkTypes();
-      console.log("workTypes", workTypes);
       const workTypesOptions = workTypes?.data?.data?.data.map((workType) => ({
         value: String(workType.id),
         label: workType.name,
@@ -109,7 +112,6 @@ const CreateJob = ({ params }: { params: { id_update: string } }) => {
   const fetchEducationLevels = async () => {
     try {
       const educationLevels = await getEducationLevels();
-      console.log("educationLevels", educationLevels);
       const educationLevelsOptions = educationLevels?.data?.data?.data.map(
         (educationLevel) => ({
           value: String(educationLevel.id),
@@ -152,7 +154,6 @@ const CreateJob = ({ params }: { params: { id_update: string } }) => {
   });
 
   const handleCreateJob: SubmitHandler<FormValues> = async (data) => {
-    console.log("Creating job with data:", data);
     try {
       const jobData = {
         company_id: parseInt(data.company),
@@ -170,7 +171,6 @@ const CreateJob = ({ params }: { params: { id_update: string } }) => {
         work_type: data.jobType,
         city_id: null,
       };
-      console.log("jobData", jobData);
       await createJobVacancy(jobData);
       toast({
         title: "Success",

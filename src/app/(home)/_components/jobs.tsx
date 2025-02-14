@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 
 export default function Jobs() {
-  const [jobs, setJobs] = useState(jobData);
+  const [jobs] = useState(jobData);
 
   return (
     <section className="bg-white px-6 py-12 md:py-16 lg:py-24 lg:px-20 sm:px-6 md:px-12">

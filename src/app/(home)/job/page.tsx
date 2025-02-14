@@ -8,7 +8,7 @@ import { JobVacancy } from "@/model/job";
 
 export default function Home() {
   const [filteredJobs, setFilteredJobs] = useState<JobVacancy[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchJobs = async () => {

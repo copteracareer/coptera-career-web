@@ -11,7 +11,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Check, icons } from "lucide-react";
+import { Check } from "lucide-react";
 import Link from "next/link";
 
 const PacketPage = () => {

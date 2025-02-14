@@ -46,8 +46,8 @@ const AdminDataTable = <T extends { created_at: string }>({
   data,
   columns,
   searchPlaceholder = "Search...",
-  created_atVissible = false,
-}: AdminDataTableProps<T>) => {
+}: // created_atVissible = false,
+AdminDataTableProps<T>) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

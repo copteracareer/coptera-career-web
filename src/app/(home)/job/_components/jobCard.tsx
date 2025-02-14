@@ -9,20 +9,20 @@ import {
 import { Separator } from "@radix-ui/react-separator";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "@/components/ui/button";
-import { shortenText } from "@/utils/helper";
+// import { shortenText } from "@/utils/helper";
 
-const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
+// const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
 
-interface JobCardProps {
-  job: {
-    title: string;
-    company: string;
-    location: string;
-    type: string;
-    experience: string;
-    salary: string;
-  };
-}
+// interface JobCardProps {
+//   job: {
+//     title: string;
+//     company: string;
+//     location: string;
+//     type: string;
+//     experience: string;
+//     salary: string;
+//   };
+// }
 
 export default function JobCard({ job }: { job: any }) {
   return (
@@ -61,7 +61,6 @@ export default function JobCard({ job }: { job: any }) {
         </div>
       </SheetTrigger>
       <SheetContent className="w-[400px] sm:w-[1200px] sm:max-w-none z-[999999] overflow-auto">
-        {/* ✅ Tambahkan SheetTitle agar sesuai dengan Radix UI */}
         <SheetTitle>{job.title}</SheetTitle>
         <div className="grid grid-cols-12 gap-4 p-8">
           <div className="col-span-9 flex flex-col gap-6">

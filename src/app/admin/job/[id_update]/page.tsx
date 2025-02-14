@@ -9,20 +9,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { FormFieldConfig } from "../../_components/form/FormFieldComponent";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Job } from "@/model/job";
 import jobApi from "@/utils/api/job";
 
-const internationalPhoneNumberSchema = z.string().regex(/^\+[1-9]\d{1,14}$/, {
-  message: "Invalid international phone number format.",
-});
-
-const indonesiaPhoneNumberSchema = z
-  .string()
-  .regex(/^(?:\+62|0)[2-9]\d{7,11}$/, {
-    message: "Invalid Indonesian phone number format.",
-  });
-
+// Skema validasi data formulir
 const FormSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -37,15 +28,14 @@ const FormSchema = z.object({
   requirement: z.string(),
   linkedin: z.string(),
   created_at: z.string(),
-  img: z.string().url(), // Assuming the image is a URL
+  img: z.string().url(), // URL gambar
 });
 
 type FormValues = z.infer<typeof FormSchema>;
 
 const UpdateJob = ({ params }: { params: { id_update: string } }) => {
   const router = useRouter();
-
-  const [jobs, setJobs] = useState<Job>();
+  const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
 
   const methods = useForm<FormValues>({
@@ -54,64 +44,37 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
 
   const { reset } = methods;
 
-  useEffect(() => {
-    fetchJob();
-  }, []);
-
-  const fetchJob = async () => {
+  // Fetch job data menggunakan useCallback agar tetap stabil di dependency array useEffect
+  const fetchJob = useCallback(async () => {
     try {
-      const jobs = await jobApi.job(params.id_update);
-      setJobs(jobs);
-      reset(jobs);
+      const jobData = await jobApi.job(params.id_update);
+      setJob(jobData);
+      reset(jobData);
     } catch (error) {
-      console.error("Failed to fetch jobs:", error);
+      console.error("Failed to fetch job:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id_update, reset]);
 
-  const handleDeleteJob = async (id: string) => {
-    try {
-      await jobApi.jobDelete(id);
-      console.log("job deleted successfully");
-    } catch (error) {
-      console.error("Failed to delete job:", error);
-    }
-  };
+  // Panggil fetchJob saat komponen di-mount
+  useEffect(() => {
+    fetchJob();
+  }, [fetchJob]);
 
-  const handleUpdateJob = async (id: string, data: Job) => {
-    // try {
-    //   await jobApi.jobUpdate(id, data);
-    //   console.log("job updated successfully", data);
-    //   toast({
-    //     title: "Success",
-    //     description: "User updated successfully.",
-    //     action: (
-    //       <ToastAction altText="Try again" asChild>
-    //         <Button
-    //           variant="default"
-    //           className="bg-blue-600 text-white hover:bg-blue-500"
-    //         >
-    //           Done
-    //         </Button>
-    //       </ToastAction>
-    //     ),
-    //   });
-    //   // router.push("/admin/user");
-    // } catch (error) {
-    //   console.error("Failed to delete user:", error);
-    // }
+  const handleUpdateJob = async (_id: string, _data: Job) => {
+    console.log("Function handleUpdateJob is defined but not used");
   };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     handleUpdateJob(data.id, data);
-    // handle create user logic
   };
 
   const handleCancelButton = () => {
     router.push("/admin/job");
   };
 
+  // Konfigurasi formulir
   const sections: Array<{
     title: string;
     fields: Array<FormFieldConfig | FormFieldConfig[]>;
@@ -123,7 +86,7 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
           name: "title",
           label: "Job Title",
           type: "text",
-          placeholder: "Cth: Web Development",
+          placeholder: "Cth: Web Developer",
         },
         {
           name: "company",
@@ -152,14 +115,14 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
         {
           name: "job_description",
           label: "Job Description",
-          type: "number",
-          placeholder: "Cth: 1",
+          type: "text",
+          placeholder: "Deskripsi Pekerjaan",
         },
         {
           name: "requirement",
           label: "Requirement",
           type: "text",
-          placeholder: "Cth: Bachelor Degree in Computer Science",
+          placeholder: "Cth: Bachelor Degree",
         },
         {
           name: "post_date",
@@ -200,17 +163,14 @@ const UpdateJob = ({ params }: { params: { id_update: string } }) => {
     },
   ];
 
+  // Konfigurasi tombol
   const button: ButtonConfig[] = [
-    {
-      label: "Cancel",
-      onClick: handleCancelButton,
-      variant: "outline",
-    },
+    { label: "Cancel", onClick: handleCancelButton, variant: "outline" },
     { label: "Update Job", onClick: methods.handleSubmit(onSubmit) },
   ];
 
   return (
-    <ContentPageComponent title="Users" button={button}>
+    <ContentPageComponent title="Update Job" button={button}>
       <div className="px-8 py-8 bg-white h-full">
         <AdminCustomForm
           methods={methods}

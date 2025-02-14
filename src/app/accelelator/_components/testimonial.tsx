@@ -8,8 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Import, Linkedin } from "lucide-react";
-import { HelpCircle } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 const CareerSections: React.FC = () => {
   return (

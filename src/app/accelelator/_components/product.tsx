@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const ProductSection = () => {
   const products = [
@@ -61,10 +62,12 @@ const ProductSection = () => {
               </div>
 
               <div className="lg:w-1/2">
-                <img
+                <Image
                   src={product.image}
                   alt={product.title}
                   className="w-full h-auto rounded-lg shadow-lg"
+                  width={100}
+                  height={100}
                 />
               </div>
             </div>

@@ -26,28 +26,22 @@ import { createJobVacancy } from "../../../../../actions/job-vacancy";
 const FormSchema = z.object({
   title: z.string().min(1, "Job title is required"),
   company: z.string().min(1, "Company is required"),
-  jobExperience: z.string().min(1, "jobExperience is required"),
-  jobClassfication: z.string().min(1, "jobClassfication is required"),
-  workType: z.string().min(1, "workType is required"),
-  educationLevel: z.string().min(1, "educationLevel is required"),
-  dueDate: z.string().min(1, "dueDate is required"),
-  link: z.string().min(1, "link is required"),
-  minimumSalary: z.string().min(1, "minimumSalary is required"),
-  maximumSalary: z.string().min(1, "maximumSalary is required"),
-  frequency: z.string().min(1, "frequency is required"),
-  description: z.string().min(1, "description is required"),
-  jobType: z.string().min(1, "jobType is required"),
+  jobExperience: z.string().min(1, "Job Experience is required"),
+  jobClassfication: z.string().min(1, "Job Classification is required"),
+  workType: z.string().min(1, "Work Type is required"),
+  educationLevel: z.string().min(1, "Education Level is required"),
+  dueDate: z.string().min(1, "Due Date is required"),
+  link: z.string().min(1, "Link is required"),
+  minimumSalary: z.string().min(1, "Minimum Salary is required"),
+  maximumSalary: z.string().min(1, "Maximum Salary is required"),
+  frequency: z.string().min(1, "Frequency is required"),
+  description: z.string().min(1, "Description is required"),
+  jobType: z.string().min(1, "Job Type is required"),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
 
-type PageProps = {
-  params: { id_update: string };
-};
-
-const CreateJob = ({ params }: PageProps) => {
-  const { id_update } = params; // Access the dynamic parameter from URL
-
+const CreateJob = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [jobExperiences, setJobExperiences] = useState<JobExperience[]>([]);
   const [jobClassifications, setJobClassifications] = useState<[]>([]);
@@ -70,6 +64,7 @@ const CreateJob = ({ params }: PageProps) => {
   const fetchJobExperiences = async () => {
     try {
       const jobExperiences = await getJobExperience();
+      console.log("jobExperiences", jobExperiences);
       const jobExperiencesOptions = jobExperiences?.data?.data?.data.map(
         (jobExperience) => ({
           value: String(jobExperience.id),
@@ -85,6 +80,7 @@ const CreateJob = ({ params }: PageProps) => {
   const fetchJobClassifications = async () => {
     try {
       const jobClassifications = await getJobClassification();
+      console.log("jobClassifications", jobClassifications);
       const jobClassificationsOptions =
         jobClassifications?.data?.data?.data.map((jobClassification) => ({
           value: String(jobClassification.id),
@@ -99,6 +95,7 @@ const CreateJob = ({ params }: PageProps) => {
   const fetchWorkTypes = async () => {
     try {
       const workTypes = await getWorkTypes();
+      console.log("workTypes", workTypes);
       const workTypesOptions = workTypes?.data?.data?.data.map((workType) => ({
         value: String(workType.id),
         label: workType.name,
@@ -112,6 +109,7 @@ const CreateJob = ({ params }: PageProps) => {
   const fetchEducationLevels = async () => {
     try {
       const educationLevels = await getEducationLevels();
+      console.log("educationLevels", educationLevels);
       const educationLevelsOptions = educationLevels?.data?.data?.data.map(
         (educationLevel) => ({
           value: String(educationLevel.id),
@@ -154,6 +152,7 @@ const CreateJob = ({ params }: PageProps) => {
   });
 
   const handleCreateJob: SubmitHandler<FormValues> = async (data) => {
+    console.log("Creating job with data:", data);
     try {
       const jobData = {
         company_id: parseInt(data.company),
@@ -171,6 +170,7 @@ const CreateJob = ({ params }: PageProps) => {
         work_type: data.jobType,
         city_id: null,
       };
+      console.log("jobData", jobData);
       await createJobVacancy(jobData);
       toast({
         title: "Success",

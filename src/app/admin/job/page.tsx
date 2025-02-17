@@ -73,28 +73,28 @@ const Job = () => {
     },
   ];
 
-  const handleDeleteJob = async (id: string) => {
-    try {
-      await jobApi.jobDelete(id);
-      setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
-    } catch (error) {
-      console.error("Failed to delete job:", error);
-    }
-  };
+  // const handleDeleteJob = async (id: string) => {
+  //   try {
+  //     await jobApi.jobDelete(id);
+  //     setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
+  //   } catch (error) {
+  //     console.error("Failed to delete job:", error);
+  //   }
+  // };
 
-  const handleStatusChange = async (job: JobVacancy, newStatus: boolean) => {
-    try {
-      // Simulasi API Update Status Job
-      await jobApi.updateJobStatus(job.id, newStatus);
-      setJobs((prevJobs) =>
-        prevJobs.map((j) =>
-          j.id === job.id ? { ...j, is_closed: newStatus } : j
-        )
-      );
-    } catch (error) {
-      console.error("Failed to update job status:", error);
-    }
-  };
+  // const handleStatusChange = async (job: JobVacancy, newStatus: boolean) => {
+  //   try {
+  //     // Simulasi API Update Status Job
+  //     await jobApi.updateJobStatus(job.id, newStatus);
+  //     setJobs((prevJobs) =>
+  //       prevJobs.map((j) =>
+  //         j.id === job.id ? { ...j, is_closed: newStatus } : j
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Failed to update job status:", error);
+  //   }
+  // };
 
   const columns: ColumnDef<JobVacancy>[] = [
     {
@@ -148,7 +148,6 @@ const Job = () => {
           <div className="flex items-center justify-center">
             <Switch
               checked={job.is_closed}
-              onCheckedChange={(checked) => handleStatusChange(job, checked)}
               className="text-center"
               id={`switch-${job.id}`}
             />
@@ -190,7 +189,7 @@ const Job = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => handleDeleteJob(job.id)}>
+                <DropdownMenuItem>
                   <Trash2 className="w-4 h-4 mr-2" />
                   Delete
                 </DropdownMenuItem>

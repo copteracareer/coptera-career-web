@@ -25,33 +25,31 @@ export interface JobVacancy {
   is_closed: boolean;
   company: Company;
   city: City;
-  jobVacancyFacilities: any[]; // Sesuaikan jika ada
+  jobVacancyFacilities: JobFacility[];
   jobVacancySalary: JobVacancySalary | null;
-  category: string;
-  type: string;
-  requirement: string;
-  experience: string;
+  category?: string;
+  type?: string;
+  requirement?: string;
+  experience?: string;
 }
 
 export interface Company {
   id: number;
   name: string;
-  brand: string;
-  description: string;
-  address: string;
-  type: string;
-  image: string;
-  web: string;
-  company_size: string;
-  total_position: string;
-  is_verified: boolean;
-  is_partner: boolean;
+  brand?: string;
+  description?: string;
+  address?: string;
+  image?: string;
+  web?: string;
+  company_size?: string;
+  is_verified?: boolean;
+  is_partner?: boolean;
 }
 
 export interface City {
   id: number;
   name: string;
-  province: Province;
+  province?: Province;
 }
 
 export interface Province {
@@ -59,19 +57,20 @@ export interface Province {
   name: string;
 }
 
+export interface JobFacility {
+  id: number;
+  name: string;
+  image?: string;
+}
+
 export interface JobVacancyFacility {
   id: number;
   jobFacility: JobFacility;
 }
 
-export interface JobFacility {
-  id: number;
-  name: string;
-  image: string;
-}
-
 export interface JobVacancySalary {
-  id: number;
-  salary: number;
+  minimum: number;
+  maximum: number;
+  frequency: string;
   currency: string;
 }

@@ -14,25 +14,37 @@ export default function Home() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        // Mendapatkan data pekerjaan
         const jobs = await getJobVacancies();
 
-        console.log("Response jobs:", jobs); // Debug: Cek response
-
-        // Pastikan data yang diterima adalah array
         if (Array.isArray(jobs)) {
-          // Memformat data sesuai dengan yang diperlukan
-          const formattedJobs = jobs.map((job: JobVacancy) => ({
+          const formattedJobs: JobVacancy[] = jobs.map((job) => ({
             id: job.id,
             title: job.title,
-            company: job.company?.name || "Unknown Company",
-            location: job.city?.name || "Unknown Location",
-            type: job.work_type || "Unknown",
-            experience: job.requirement || "Not specified",
-            salary: job.jobVacancySalary?.salary || "Negotiable",
+            company: job.company
+              ? job.company
+              : { id: 0, name: "Unknown Company" },
+            city: job.city ? job.city : { id: 0, name: "Unknown Location" },
+            work_type: job.work_type || "Unknown",
+            due_date: job.due_date ? new Date(job.due_date) : null,
+            description: job.description || "No description available",
+            link: job.link || "#",
+            is_closed: job.is_closed,
+            jobVacancyFacilities: [],
+            jobVacancySalary: job.jobVacancySalary
+              ? {
+                  minimum: job.jobVacancySalary.minimum,
+                  maximum: job.jobVacancySalary.maximum,
+                  frequency: job.jobVacancySalary.frequency,
+                  currency: job.jobVacancySalary.currency,
+                }
+              : null,
+            category: job.category || "Unknown",
+            type: job.type || "Unknown",
+            requirement: job.requirement || "No requirement specified",
+            experience: job.experience || "No experience specified",
           }));
 
-          // Set filteredJobs dengan data yang sudah diformat
+          console.log("Data pekerjaan:", formattedJobs);
           setFilteredJobs(formattedJobs);
         } else {
           console.error("Data yang diterima bukan array:", jobs);

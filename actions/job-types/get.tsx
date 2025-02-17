@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
 
@@ -7,8 +7,8 @@ const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
  *
  * @returns A promise that resolves to an AxiosResponse containing the list of work types
  */
-const getWorkTypes = async (): Promise<AxiosResponse<WorkType[]>> => {
-  return axios.get<WorkType[]>(`${apiUrl}/api/job-type`);
+const getWorkTypes = async (): Promise<WorkType[]> => {
+  return axios.get(`${apiUrl}/api/job-type`);
 };
 
 export interface WorkType {

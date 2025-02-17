@@ -1,20 +1,19 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
-
-/**
- * Retrieve a list of all work types from the Coptera API
- *
- * @returns A promise that resolves to an AxiosResponse containing the list of work types
- */
-const getJobExperience = async (): Promise<AxiosResponse<JobExperience[]>> => {
-  return axios.get<JobExperience[]>(`${apiUrl}/api/job-experience`);
-};
 
 export interface JobExperience {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
 }
+
+const getJobExperience = async (): Promise<JobExperience[]> => {
+  const response = await axios.get(`${apiUrl}/api/job-experience`);
+
+  console.log("response experience", response);
+
+  return response.data?.data?.data ?? [];
+};
 
 export default getJobExperience;

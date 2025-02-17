@@ -41,17 +41,24 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
+interface OptionInterface {
+  value: string;
+  label: string;
+}
+
 const CreateJob = () => {
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [jobExperiences, setJobExperiences] = useState<JobExperience[]>([]);
-  const [jobClassifications, setJobClassifications] = useState<[]>([]);
-  const [workTypes, setWorkTypes] = useState<[]>([]);
-  const [educationLevels, setEducationLevels] = useState<[]>([]);
+  const [companies, setCompanies] = useState<OptionInterface[]>([]);
+  const [jobExperiences, setJobExperiences] = useState<OptionInterface[]>([]);
+  const [jobClassifications, setJobClassifications] = useState<
+    OptionInterface[]
+  >([]);
+  const [workTypes, setWorkTypes] = useState<OptionInterface[]>([]);
+  const [educationLevels, setEducationLevels] = useState<OptionInterface[]>([]);
 
   const fetchCompanies = async () => {
     try {
       const companies = await getCompanies();
-      const companyOptions = companies?.data?.data?.data.map((company) => ({
+      const companyOptions = companies.map((company) => ({
         value: String(company.id),
         label: company.name,
       }));
@@ -64,13 +71,10 @@ const CreateJob = () => {
   const fetchJobExperiences = async () => {
     try {
       const jobExperiences = await getJobExperience();
-      console.log("jobExperiences", jobExperiences);
-      const jobExperiencesOptions = jobExperiences?.data?.data?.data.map(
-        (jobExperience) => ({
-          value: String(jobExperience.id),
-          label: jobExperience.name,
-        })
-      );
+      const jobExperiencesOptions = jobExperiences?.map((jobExperience) => ({
+        value: String(jobExperience.id),
+        label: jobExperience.name,
+      }));
       setJobExperiences(jobExperiencesOptions);
     } catch (error) {
       console.error("Error fetching jobExperiences:", error);
@@ -81,11 +85,12 @@ const CreateJob = () => {
     try {
       const jobClassifications = await getJobClassification();
       console.log("jobClassifications", jobClassifications);
-      const jobClassificationsOptions =
-        jobClassifications?.data?.data?.data.map((jobClassification) => ({
+      const jobClassificationsOptions = jobClassifications.map(
+        (jobClassification) => ({
           value: String(jobClassification.id),
           label: jobClassification.name,
-        }));
+        })
+      );
       setJobClassifications(jobClassificationsOptions);
     } catch (error) {
       console.error("Error fetching jobClassifications:", error);
@@ -96,7 +101,7 @@ const CreateJob = () => {
     try {
       const workTypes = await getWorkTypes();
       console.log("workTypes", workTypes);
-      const workTypesOptions = workTypes?.data?.data?.data.map((workType) => ({
+      const workTypesOptions = workTypes.map((workType) => ({
         value: String(workType.id),
         label: workType.name,
       }));
@@ -110,12 +115,10 @@ const CreateJob = () => {
     try {
       const educationLevels = await getEducationLevels();
       console.log("educationLevels", educationLevels);
-      const educationLevelsOptions = educationLevels?.data?.data?.data.map(
-        (educationLevel) => ({
-          value: String(educationLevel.id),
-          label: educationLevel.name,
-        })
-      );
+      const educationLevelsOptions = educationLevels.map((educationLevel) => ({
+        value: String(educationLevel.id),
+        label: educationLevel.name,
+      }));
       setEducationLevels(educationLevelsOptions);
     } catch (error) {
       console.error("Error fetching educationLevels:", error);

@@ -8,7 +8,6 @@ const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
  */
 const getJobVacancies = async (): Promise<JobVacancy[]> => {
   const response = await axios.get(`${apiUrl}/api/job-vacancy`);
-  // Mengembalikan array langsung dari response
   return response?.data?.data?.data || [];
 };
 

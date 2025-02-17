@@ -43,7 +43,7 @@ const Job = () => {
   const fetchJobs = useCallback(async () => {
     try {
       const response = await getJobVacancies();
-      setJobs(response?.data?.data?.data || []);
+      setJobs(response || []);
     } catch (error) {
       console.error("Failed to fetch jobs:", error);
     } finally {

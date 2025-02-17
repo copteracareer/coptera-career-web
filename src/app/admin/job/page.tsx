@@ -213,10 +213,22 @@ const Job = () => {
 
   return (
     <ContentPageComponent title="Job" button={button}>
-      <SheetJob
+      {/* <SheetJob
         isOpen={isSheetOpen}
         onClose={() => setIsSheetOpen(false)}
-        jobData={selectedJob}
+        jobData={
+          selectedJob
+            ? {
+                ...selectedJob,
+                jobVacancyFacilities: selectedJob.jobVacancyFacilities.map(
+                  (fac) => ({
+                    id: fac.id,
+                    jobFacility: fac,
+                  })
+                ),
+              }
+            : null
+        }
       />
       <div className="px-8">
         <AdminDataTable
@@ -224,7 +236,7 @@ const Job = () => {
           columns={columns}
           searchPlaceholder="Search jobs..."
         />
-      </div>
+      </div> */}
     </ContentPageComponent>
   );
 };

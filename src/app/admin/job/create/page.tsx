@@ -142,7 +142,6 @@ const CreateJob = () => {
       jobExperience: "",
       jobClassfication: "",
       workType: "",
-      educationLevel: "",
       dueDate: "",
       link: "",
       minimumSalary: "",

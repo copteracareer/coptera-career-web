@@ -28,7 +28,6 @@ const FormSchema = z.object({
   company: z.string().min(1, "Company is required"),
   jobExperience: z.string().min(1, "Job Experience is required"),
   jobClassfication: z.string().min(1, "Job Classification is required"),
-  workType: z.string().min(1, "Work Type is required"),
   dueDate: z.string().min(1, "Due Date is required"),
   link: z.string().min(1, "Link is required"),
   minimumSalary: z.string().min(1, "Minimum Salary is required"),

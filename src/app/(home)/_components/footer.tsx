@@ -33,14 +33,11 @@ const Footer = () => {
           <h2 className="font-semibold">Sitemap</h2>
           <Separator className="border-[#FFC00B] border-[1px] my-4" />
           <div className="flex flex-col gap-4">
-            <Link className="text-sm" href="/docs">
-              Resource
+            <Link className="text-sm" href="/job">
+              Job Vacancy
             </Link>
-            <Link className="text-sm" href="/docs">
-              Tips & Trick
-            </Link>
-            <Link className="text-sm" href="/docs">
-              Komunitas
+            <Link className="text-sm" href="/accelelator">
+              Career Accelelator
             </Link>
           </div>
         </div>
@@ -50,13 +47,13 @@ const Footer = () => {
           <h2 className="font-semibold">Contact Info</h2>
           <Separator className="border-[#FFC00B] border-[1px] my-4" />
           <div className="flex flex-col gap-4">
-            <Link className="text-sm flex items-center gap-2" href="/docs">
+            <Link className="text-sm flex items-center gap-2" href="#">
               <Phone className="ml-2 h-4 w-4" /> +85893479859
             </Link>
-            <Link className="text-sm flex items-center gap-2" href="/docs">
+            <Link className="text-sm flex items-center gap-2" href="#">
               <Mail className="ml-2 h-4 w-4" /> coptera.career@gmail.com
             </Link>
-            <Link className="text-sm flex items-center gap-2" href="/docs">
+            <Link className="text-sm flex items-center gap-2" href="#">
               <MapPin className="ml-2 h-4 w-4" /> JL. Sekelimus Bandung No 24
             </Link>
           </div>

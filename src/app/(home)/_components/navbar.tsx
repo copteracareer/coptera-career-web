@@ -39,11 +39,6 @@ export default function Navbar() {
                 Job Vacancy
               </NavigationMenuLink>
             </Link>
-            <Link href="/docs" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Tips & Trick
-              </NavigationMenuLink>
-            </Link>
             <Link href="/accelelator" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Career Accelerator

@@ -199,12 +199,6 @@ const Job = () => {
         );
       },
     },
-    {
-      accessorKey: "created_at",
-      header: "Created At",
-      cell: ({ row }) =>
-        new Date(row.getValue("created_at")).toLocaleDateString(),
-    },
   ];
 
   if (loading) {
@@ -216,27 +210,18 @@ const Job = () => {
       {/* <SheetJob
         isOpen={isSheetOpen}
         onClose={() => setIsSheetOpen(false)}
-        jobData={
-          selectedJob
-            ? {
-                ...selectedJob,
-                jobVacancyFacilities: selectedJob.jobVacancyFacilities.map(
-                  (fac) => ({
-                    id: fac.id,
-                    jobFacility: fac,
-                  })
-                ),
-              }
-            : null
-        }
-      />
+        jobData={selectedJob}
+      /> */}
       <div className="px-8">
         <AdminDataTable
-          data={jobs}
+          data={jobs.map((job) => ({
+            ...job,
+            created_at: "",
+          }))}
           columns={columns}
           searchPlaceholder="Search jobs..."
         />
-      </div> */}
+      </div>
     </ContentPageComponent>
   );
 };

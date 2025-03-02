@@ -89,3 +89,27 @@ body {
 .bg-gradient-brand {
   @apply bg-gradient-to-r from-blue-600 to-blue-500;
 }
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-bounce-blink {
+  animation: bounce 2s infinite, blink 1.5s infinite;
+}

@@ -109,7 +109,7 @@ export default function FilterSidebar({
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-semibold text-lg">Filter</h2>
           <button onClick={clearAllFilters} className="text-red-500 text-sm">
-            Clear all
+            Hapus Filter
           </button>
         </div>
 

@@ -34,11 +34,21 @@ export default function JobCard({ job }: { job: any }) {
       <div className="p-4 rounded-xl border border-gray-200 transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer">
         <div className="flex items-start gap-3">
           {/* Company Logo Placeholder */}
-          <div className="w-12 h-12 bg-blue-500 rounded-sm flex items-center justify-center flex-shrink-0">
-            <span className="text-white font-bold">
-              {job.company.charAt(0)}
-            </span>
-          </div>
+          {job.company_image ? (
+            <Avatar className="w-12 h-12 rounded-sm flex-shrink-0 overflow-hidden flex items-center justify-center">
+              <AvatarImage
+                src={`https://cooperative-pewter-paw.glitch.me/${job.company_image}`}
+                alt={job.company}
+                className="object-contain"
+              />
+            </Avatar>
+          ) : (
+            <div className="w-12 h-12 bg-blue-500 rounded-sm flex items-center justify-center flex-shrink-0">
+              <span className="text-white font-bold">
+                {job.company.charAt(0)}
+              </span>
+            </div>
+          )}
 
           {/* Job Details */}
           <div>

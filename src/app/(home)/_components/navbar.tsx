@@ -36,7 +36,7 @@ export default function Navbar() {
           <NavigationMenuItem>
             <Link href="/job" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Job Vacancy
+                Lowongan Kerja
               </NavigationMenuLink>
             </Link>
             <Link href="/accelelator" legacyBehavior passHref>

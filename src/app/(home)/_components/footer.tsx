@@ -17,8 +17,8 @@ const Footer = () => {
             height={150}
           />
           <p className="text-sm mt-5">
-            Coptera Career is job vacancy information and <br /> tips & tricks
-            for career development.
+            Coptera Career adalah informasi lowongan kerja dan <br />
+            tips &amp; trik untuk pengembangan karir.
           </p>
           <div className="flex items-center gap-4 mt-8">
             <Instagram className="h-6 w-6" />
@@ -34,7 +34,7 @@ const Footer = () => {
           <Separator className="border-[#FFC00B] border-[1px] my-4" />
           <div className="flex flex-col gap-4">
             <Link className="text-sm" href="/job">
-              Job Vacancy
+              Lowongan Kerja
             </Link>
             <Link className="text-sm" href="/accelelator">
               Career Accelelator

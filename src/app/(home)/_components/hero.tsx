@@ -37,15 +37,15 @@ export default function Hero() {
       {/* Judul Hero */}
       <div className="text-[32px] lg:text-[48px] font-bold text-center">
         <h1>
-          Grab the Opportunity to{" "}
-          <span className="text-yellow-400">Innovate</span>
+          Raih Peluang untuk <span className="text-yellow-400">Berinovasi</span>{" "}
+          dan
         </h1>
-        <h1>and Make Dreams Come True</h1>
+        <h1>Wujudkan Karier Impian Menjadi Kenyataan</h1>
       </div>
 
       {/* Deskripsi Hero */}
       <p className="text-[14px] lg:text-[16px] text-gray-400 text-center">
-        Find your dream career here, who knows you might find your soulmate
+        Temukan karier impian mu disini!!
       </p>
 
       {showIndicator && <ScrollIndicator />}

@@ -7,6 +7,7 @@ import { getJobVacancies } from "../../../../actions/job-vacancy";
 import { JobVacancy } from "@/model/job";
 
 export default function Home() {
+  const [jobs, setJobs] = useState<JobVacancy[]>([]);
   const [filteredJobs, setFilteredJobs] = useState<JobVacancy[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -15,7 +16,6 @@ export default function Home() {
     const fetchJobs = async () => {
       try {
         const jobs = await getJobVacancies();
-
         if (Array.isArray(jobs)) {
           const formattedJobs: JobVacancy[] = jobs.map((job) => ({
             id: job.id,
@@ -44,8 +44,8 @@ export default function Home() {
             experience: job.experience || "No experience specified",
           }));
 
-          console.log("Data pekerjaan:", formattedJobs);
           setFilteredJobs(formattedJobs);
+          setJobs(formattedJobs);
         } else {
           console.error("Data yang diterima bukan array:", jobs);
         }
@@ -58,26 +58,21 @@ export default function Home() {
   }, []);
 
   // Menangani perubahan filter
-  const handleFilterChange = useCallback(
-    (newFilters: any) => {
-      const filtered = filteredJobs.filter(
-        (job) =>
-          (newFilters.jobType.length
-            ? newFilters.jobType.includes(job.type)
-            : true) &&
-          (newFilters.experience
-            ? job.experience === newFilters.experience
-            : true)
-      );
-      setFilteredJobs(filtered);
-    },
-    [filteredJobs]
-  );
+  const handleFilterChange = useCallback(async (newFilters: any) => {
+    try {
+      const jobs = await getJobVacancies(newFilters);
+      setJobs(jobs);
+      setFilteredJobs(jobs);
+      console.log("Data yang diterima:", jobs);
+    } catch (error) {
+      console.error("Gagal mengambil data dengan filter:", error);
+    }
+  }, []);
 
   // Menangani pencarian pekerjaan
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    const filtered = filteredJobs.filter((job) =>
+    const filtered = jobs.filter((job) =>
       job.title.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredJobs(filtered);

@@ -1,14 +1,24 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState, useEffect, useCallback } from "react";
+import {
+  getJobExperiences,
+  getJobClassifications,
+  getJobTypes,
+  getEducationLevels,
+  getJobFacilities,
+} from "../../../../../actions/options";
 
 interface Filters {
   priority: string;
-  jobType: string[];
-  subdistrict: string[];
-  experience: string;
-  remote: boolean;
+  job_type_id: number[];
+  job_experience_id: number[];
+  job_facility_id: number[];
+  job_classification_id: number[];
+  education_level_id: number[];
+  work_type: boolean;
 }
+import { useQuery } from "@tanstack/react-query";
 
 export default function FilterSidebar({
   onFilterChange,
@@ -17,33 +27,34 @@ export default function FilterSidebar({
 }) {
   const [filters, setFilters] = useState<Filters>({
     priority: "More Relevant",
-    jobType: [],
-    subdistrict: [],
-    experience: "",
-    remote: false,
+    job_type_id: [],
+    job_experience_id: [],
+    job_facility_id: [],
+    job_classification_id: [],
+    education_level_id: [],
+    work_type: false,
   });
 
-  const jobTypes = [
-    "Full Time",
-    "Contract",
-    "Internship",
-    "Part Time",
-    "Daily",
-  ];
-  const subdistricts = [
-    "Cengkareng",
-    "Cilandak",
-    "Gambir",
-    "Kebon Jeruk",
-    "Kelapa Gading",
-  ];
-  const experiences = [
-    "Less than 1 Years",
-    "1-3 Years",
-    "3-5 Years",
-    "5-10 Years",
-    "> 10 Years",
-  ];
+  const { data: jobFacilities = [] } = useQuery({
+    queryKey: ["jobFacilities"],
+    queryFn: getJobFacilities,
+  });
+  const { data: experiences = [] } = useQuery({
+    queryKey: ["jobExperiences"],
+    queryFn: getJobExperiences,
+  });
+  const { data: classifications = [] } = useQuery({
+    queryKey: ["jobClassifications"],
+    queryFn: getJobClassifications,
+  });
+  const { data: jobTypes = [] } = useQuery({
+    queryKey: ["jobTypes"],
+    queryFn: getJobTypes,
+  });
+  const { data: educationLevels = [] } = useQuery({
+    queryKey: ["educationLevels"],
+    queryFn: getEducationLevels,
+  });
 
   // 🚀 Optimasi: Gunakan `useCallback` untuk mencegah fungsi berubah setiap render
   const debouncedFilterChange = useCallback(() => {
@@ -58,14 +69,13 @@ export default function FilterSidebar({
     return () => clearTimeout(timer);
   }, [filters, debouncedFilterChange]);
 
-  const handleCheckboxChange = (name: keyof Filters, value: string) => {
+  const handleCheckboxChange = (name: keyof Filters, value: number) => {
     setFilters((prev) => {
       if (Array.isArray(prev[name])) {
         const newValue = prev[name].includes(value)
           ? prev[name].filter((item) => item !== value)
           : [...prev[name], value];
 
-        // ⛔ Hindari update jika tidak ada perubahan
         if (JSON.stringify(newValue) === JSON.stringify(prev[name]))
           return prev;
 
@@ -73,17 +83,19 @@ export default function FilterSidebar({
       }
       return prev;
     });
+
+    console.log("berubah filter", filters);
   };
 
-  const handleExperienceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilters((prev) => {
-      if (prev.experience === e.target.value) return prev;
-      return { ...prev, experience: e.target.value };
-    });
-  };
+  // const handleExperienceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setFilters((prev) => {
+  //     if (prev.experience === e.target.value) return prev;
+  //     return { ...prev, experience: e.target.value };
+  //   });
+  // };
 
   const handleRemoteToggle = () => {
-    setFilters((prev) => ({ ...prev, remote: !prev.remote }));
+    setFilters((prev) => ({ ...prev, work_type: !prev.work_type }));
   };
 
   const handlePriorityChange = (priority: string) => {
@@ -96,10 +108,12 @@ export default function FilterSidebar({
   const clearAllFilters = () => {
     setFilters({
       priority: "More Relevant",
-      jobType: [],
-      subdistrict: [],
-      experience: "",
-      remote: false,
+      job_type_id: [],
+      job_experience_id: [],
+      job_facility_id: [],
+      job_classification_id: [],
+      education_level_id: [],
+      work_type: false,
     });
   };
 
@@ -114,7 +128,7 @@ export default function FilterSidebar({
         </div>
 
         {/* Priority Filter */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h3 className="font-medium mb-2">Prioritaskan</h3>
           <div className="flex space-x-2">
             <button
@@ -138,42 +152,26 @@ export default function FilterSidebar({
               Just Added
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* Job Type Filter */}
         <div className="mb-4">
           <h3 className="font-medium mb-2">Job Type</h3>
           {jobTypes.map((type) => (
-            <label key={type} className="flex items-center mb-1">
+            <label key={type.id} className="flex items-center mb-1">
               <Checkbox
-                id={type}
-                checked={filters.jobType.includes(type)}
-                onCheckedChange={() => handleCheckboxChange("jobType", type)}
-              />
-              <span className="ml-2">{type}</span>
-            </label>
-          ))}
-        </div>
-
-        {/* Subdistrict Filter */}
-        <div className="mb-4">
-          <h3 className="font-medium mb-2">Subdistrict</h3>
-          {subdistricts.map((area) => (
-            <label key={area} className="flex items-center mb-1">
-              <Checkbox
-                id={area}
-                checked={filters.subdistrict.includes(area)}
+                id={`job-type-${type.id.toString()}`}
                 onCheckedChange={() =>
-                  handleCheckboxChange("subdistrict", area)
+                  handleCheckboxChange("job_type_id", type.id)
                 }
               />
-              <span className="ml-2">{area}</span>
+              <span className="ml-2">{type.name}</span>
             </label>
           ))}
         </div>
 
         {/* Experience Filter */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h3 className="font-medium mb-2">Experience</h3>
           <select
             name="experience"
@@ -183,11 +181,74 @@ export default function FilterSidebar({
           >
             <option value="">Select Experience</option>
             {experiences.map((exp) => (
-              <option key={exp} value={exp}>
-                {exp}
+              <option key={exp.id} value={exp.name}>
+                {exp.name}
               </option>
             ))}
           </select>
+        </div> */}
+        <div className="mb-4">
+          <h3 className="font-medium mb-2">Job Experiences</h3>
+          {experiences.map((experience) => (
+            <label key={experience.id} className="flex items-center mb-1">
+              <Checkbox
+                id={`job-experience-${experience.id.toString()}`}
+                onCheckedChange={() =>
+                  handleCheckboxChange("job_experience_id", experience.id)
+                }
+              />
+              <span className="ml-2">{experience.name}</span>
+            </label>
+          ))}
+        </div>
+
+        {/* Job Type Filter */}
+        <div className="mb-4">
+          <h3 className="font-medium mb-2">Job Facilities</h3>
+          {jobFacilities.map((facilities) => (
+            <label key={facilities.id} className="flex items-center mb-1">
+              <Checkbox
+                id={`job-facilities-${facilities.id.toString()}`}
+                onCheckedChange={() =>
+                  handleCheckboxChange("job_facility_id", facilities.id)
+                }
+              />
+              <span className="ml-2">{facilities.name}</span>
+            </label>
+          ))}
+        </div>
+
+        <div className="mb-4">
+          <h3 className="font-medium mb-2">Job Classification</h3>
+          {classifications.map((classification) => (
+            <label key={classification.id} className="flex items-center mb-1">
+              <Checkbox
+                id={`job-classification-${classification.id.toString()}`}
+                onCheckedChange={() =>
+                  handleCheckboxChange(
+                    "job_classification_id",
+                    classification.id
+                  )
+                }
+              />
+              <span className="ml-2">{classification.name}</span>
+            </label>
+          ))}
+        </div>
+
+        <div className="mb-4">
+          <h3 className="font-medium mb-2">Education Levels</h3>
+          {educationLevels.map((education) => (
+            <label key={education.id} className="flex items-center mb-1">
+              <Checkbox
+                id={`job-education-${education.id.toString()}`}
+                onCheckedChange={() =>
+                  handleCheckboxChange("education_level_id", education.id)
+                }
+              />
+              <span className="ml-2">{education.name}</span>
+            </label>
+          ))}
         </div>
 
         {/* Remote Work Toggle */}
@@ -196,7 +257,7 @@ export default function FilterSidebar({
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
-              checked={filters.remote}
+              checked={filters.work_type}
               onChange={handleRemoteToggle}
               className="sr-only peer"
             />

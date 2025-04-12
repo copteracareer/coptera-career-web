@@ -39,11 +39,11 @@ export default function Navbar() {
                 Lowongan Kerja
               </NavigationMenuLink>
             </Link>
-            <Link href="/accelelator" legacyBehavior passHref>
+            {/* <Link href="/accelelator" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Career Accelerator
               </NavigationMenuLink>
-            </Link>
+            </Link> */}
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
@@ -51,7 +51,8 @@ export default function Navbar() {
       {/* Buttons for Desktop */}
       <div className="hidden lg:flex gap-2">
         <Link
-          href="https://chat.whatsapp.com/F9WXPrw5M1fDkdciySCJ6i"
+          href="https://docs.google.com/forms/d/e/1FAIpQLScVno-V3SmCtFhlHekuSuSHUuAy2sx1AaD6Oswh8OR0QXxozA/viewform?usp=preview
+"
           target="_blank"
         >
           <Button variant="brand">Komunitas Loker</Button>
@@ -87,9 +88,9 @@ export default function Navbar() {
             className="block py-2 text-sm font-medium text-gray-700 w-full"
             onClick={() => setMenuOpen(false)}
           >
-            Job Vacancy
+            Lowongan Kerja
           </Link>
-          <Link
+          {/* <Link
             href="/docs"
             className="block py-2 text-sm font-medium text-gray-700 w-full"
             onClick={() => setMenuOpen(false)}
@@ -116,7 +117,7 @@ export default function Navbar() {
             >
               Sign Up
             </Button>
-          </div>
+          </div> */}
         </div>
       )}
     </header>

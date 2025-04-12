@@ -37,7 +37,7 @@ export default function JobCard({ job }: { job: any }) {
           {job.company_image ? (
             <Avatar className="w-12 h-12 rounded-sm flex-shrink-0 overflow-hidden flex items-center justify-center">
               <AvatarImage
-                src={`https://cooperative-pewter-paw.glitch.me/${job.company_image}`}
+                src={`https://api.career.coptera.id/${job.company_image}`}
                 alt={job.company}
                 className="object-contain"
               />

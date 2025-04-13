@@ -20,7 +20,12 @@ export async function createOption(
   const API_BASE = "https://api.career.coptera.id/api";
 
   const formattedData = {
-    name: typeof data.name === "object" ? data.name.name : data.name,
+    name:
+      data.name === null
+        ? ""
+        : typeof data.name === "object"
+        ? data.name.name
+        : data.name,
   };
 
   const res = await fetch(`${API_BASE}/${endpoint}`, {

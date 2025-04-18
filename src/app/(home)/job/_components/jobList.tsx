@@ -14,11 +14,11 @@ export default function JobList({ jobs }: JobListProps) {
           key={job.id}
           job={{
             id: job.id,
-            title: job.title,
+            title: job.title.charAt(0).toUpperCase() + job.title.slice(1),
             company: job.company ? job.company.name : "Unknown Company",
             company_description: job.description || "No description available",
             company_image: job.company ? job.company.image : "",
-            location: job.city ? job.city.name : "Unknown Location",
+            location: job.city ? job.city.name : "Indonesia",
             type: job.type || "Unknown Type",
             experience: job.experience || "No experience specified",
             description: job.description || "No description available",

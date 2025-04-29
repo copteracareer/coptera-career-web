@@ -44,6 +44,7 @@ const getJobVacancies = async (
   const response = await axios.get(
     `${apiUrl}/api/job-vacancy?${params.toString()}`
   );
+
   return response?.data?.data?.data || [];
 };
 

@@ -29,6 +29,10 @@ export default function JobList({ jobs }: JobListProps) {
                     job.jobVacancySalary.maximum?.toLocaleString() || "-"
                   } ${job.jobVacancySalary.currency || "-"}`
                 : "Not specified",
+            company_address: job.company ? job.company.address : "",
+            brand: job.company ? job.company.brand : "",
+            requirement: job.requirement || "No requirement specified",
+            work_type: job.work_type || "Unknown",
           }}
         />
       ))}

@@ -48,7 +48,7 @@ export default function Hero() {
 
         {/* Deskripsi Hero */}
         <p className="text-[14px] lg:text-[16px] text-gray-400 text-center">
-          Temukan karier impian mu disini!!
+        Temukan karier impianmu di sini, bangun masa depan yang kamu inginkan dengan peluang kerja terbaik yang menanti untuk kamu jelajahi.
         </p>
 
         {showIndicator && <ScrollIndicator />}

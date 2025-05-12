@@ -22,7 +22,7 @@ export default function Jobs() {
               ? job.company
               : { id: 0, name: "Unknown Company" },
             city: job.city ? job.city : { id: 0, name: "Indonesia" },
-            work_type: job.work_type || "Unknown",
+            work_type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
             due_date: job.due_date ? new Date(job.due_date) : null,
             description: job.description || "No description available",
             link: job.link || "#",
@@ -37,7 +37,7 @@ export default function Jobs() {
                 }
               : null,
             category: job.category || "Unknown",
-            type: job.type || "Unknown",
+            type: job.jobClassification ? job.jobClassification.name || "Unknown" : "Unknown",
             requirement: job.requirement || "No requirement specified",
             experience: job.experience || "No experience specified",
           }));

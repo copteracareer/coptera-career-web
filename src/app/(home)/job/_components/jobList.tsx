@@ -19,7 +19,7 @@ export default function JobList({ jobs }: JobListProps) {
             company_description: job.description || "No description available",
             company_image: job.company ? job.company.image : "",
             location: job.city ? job.city.name : "Indonesia",
-            type: job.type || "Unknown Type",
+            type: job.jobClassification ? job.jobClassification.name || "Unknown" : "Unknown",
             experience: job.experience || "No experience specified",
             description: job.description || "No description available",
             link: job.link || "#",
@@ -32,7 +32,7 @@ export default function JobList({ jobs }: JobListProps) {
             company_address: job.company ? job.company.address : "",
             brand: job.company ? job.company.brand : "",
             requirement: job.requirement || "No requirement specified",
-            work_type: job.work_type || "Unknown",
+            work_type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
           }}
         />
       ))}

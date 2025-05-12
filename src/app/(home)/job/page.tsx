@@ -39,7 +39,7 @@ export default function Home() {
                 }
               : null,
             category: job.category || "Unknown",
-            type: job.type || "Unknown",
+            type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
             requirement: job.requirement || "No requirement specified",
             experience: job.experience || "No experience specified",
           }));
@@ -63,7 +63,6 @@ export default function Home() {
       const jobs = await getJobVacancies(newFilters);
       setJobs(jobs);
       setFilteredJobs(jobs);
-      console.log("Data yang diterima:", jobs);
     } catch (error) {
       console.error("Gagal mengambil data dengan filter:", error);
     }

@@ -45,6 +45,7 @@ const getJobVacancies = async (
     `${apiUrl}/api/job-vacancy?${params.toString()}`
   );
 
+  console.log("Data Jobs", response)
   return response?.data?.data?.data || [];
 };
 

@@ -31,6 +31,8 @@ export interface JobVacancy {
   type?: string;
   requirement?: string;
   experience?: string;
+  jobType?: JobType | null;
+  jobClassification?: JobType | null;
 }
 
 export interface Company {
@@ -73,4 +75,9 @@ export interface JobVacancySalary {
   maximum: number;
   frequency: string;
   currency: string;
+}
+
+export interface JobType {
+  id: number;
+  name: string;
 }

@@ -1,4 +1,4 @@
-import { Briefcase, Building, Clock, DollarSign, GraduationCap, Layers, MapPin, Send, Share2 } from "lucide-react";
+import { Briefcase, Building, Clock, GraduationCap, Layers, MapPin, Send } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -7,13 +7,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function JobCard({ job }: { job: any }) {
-  console.log(job)
+  console.log(job);
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -51,6 +50,14 @@ export default function JobCard({ job }: { job: any }) {
           
           {/* Job Categories & Types */}
           <div className="flex flex-wrap gap-2 mb-3 mt-4">
+            {job.location && job.location !== "Unknown" && (
+              <span className="text-xs rounded-full flex items-center text-muted-foreground font-medium gap-1">
+                <MapPin className="w-3 h-3" />
+                <span className="capitalize">{job.location}</span>
+              </span>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2 mb-3 mt-4">
             {job.category && job.category !== "Unknown" && (
               <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full flex items-center gap-1">
                 <Layers className="w-3 h-3" />
@@ -78,10 +85,10 @@ export default function JobCard({ job }: { job: any }) {
           </div>
 
           {/* Salary Information */}
-          <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+          <div className="flex items-center gap-2 font-medium text-gray-700 text-sm mb-2">
             {job.salary && job.salary !== "Not specified" ? (
               <span>
-                {"Rp"} {job.salary} / Month
+                {"Rp"} {job.salary} / Bulan
               </span>
             ) : (
               <span className="text-gray-500">Rp. -</span>
@@ -104,20 +111,42 @@ export default function JobCard({ job }: { job: any }) {
       </SheetTrigger>
       <SheetContent className="w-[400px] sm:w-[1200px] sm:max-w-none z-[999999] overflow-auto">
         <SheetHeader>
-          <SheetTitle>{job.title}</SheetTitle>
+          <SheetTitle>Detail Pekerjaan</SheetTitle>
         </SheetHeader>
         <div className="grid grid-cols-12 gap-4 p-8">
            <div className="col-span-9 flex flex-col gap-6">
-             <h1 className="text-[24px] font-bold">{job.title}</h1>
+             <h1 className="text-[28px] font-bold">{job.title}</h1>
              <div className="flex gap-2">
-               {/* <Badge>{job.work_type}</Badge> */}
-               <Badge>Remote</Badge>
+                {job.location && job.location !== "Unknown" && (
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    <span className="capitalize">{job.location}</span>
+                  </span>
+                )}
+                {job.type && job.type !== "Unknown" && (
+                  <span className="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full flex items-center gap-1">
+                    <Briefcase className="w-3 h-3" />
+                    <span className="capitalize">{job.type}</span>
+                  </span>
+                )}
+                {job.work_type && job.work_type !== "Unknown" && (
+                  <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full flex items-center gap-1">
+                    <Building className="w-3 h-3" />
+                    <span className="capitalize">{job.work_type}</span>
+                  </span>
+                )}
              </div>
-             <h1 className="text-[18px] font-semibold">
-               {/* Rp. {(job.jobVacancySalary ?? 0).toLocaleString()} */}
-             </h1>
-             <Separator />
-             <div className="flex gap-4 justify-between">
+             <div className="flex items-center gap-2 font-medium text-gray-700 text-[18px] mb-2">
+                {job.salary && job.salary !== "Not specified" ? (
+                  <span>
+                    {"Rp"} {job.salary} / Bulan
+                  </span>
+                ) : (
+                  <span className="text-gray-500">Rp. -</span>
+                )}
+              </div>
+             {/* <Separator /> */}
+             {/* <div className="flex gap-4 justify-between">
                <div className="flex flex-col gap-2">
                  <span className="text-[13px] font-medium">
                    Education Requirement
@@ -142,7 +171,7 @@ export default function JobCard({ job }: { job: any }) {
                    Marketing
                  </span>
                </div>
-             </div>
+             </div> */}
              <Separator />
              <div className="flex flex-col gap-4">
                <h1 className="font-semibold">Deskripsi Pekerjaan</h1>
@@ -185,7 +214,7 @@ export default function JobCard({ job }: { job: any }) {
                 rel="noopener noreferrer"
                 className="w-full"
              >
-               <Button className="w-full">
+               <Button variant={"brand"} className="w-full">
                 <Send className="h-4 w-4" />
                   Apply
                 </Button>

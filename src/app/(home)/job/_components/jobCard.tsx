@@ -12,7 +12,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function JobCard({ job }: { job: any }) {
-  console.log(job);
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -113,77 +112,55 @@ export default function JobCard({ job }: { job: any }) {
         <SheetHeader>
           <SheetTitle>Detail Pekerjaan</SheetTitle>
         </SheetHeader>
-        <div className="grid grid-cols-12 gap-4 p-8">
-           <div className="col-span-9 flex flex-col gap-6">
-             <h1 className="text-[28px] font-bold">{job.title}</h1>
-             <div className="flex gap-2">
-                {job.location && job.location !== "Unknown" && (
-                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span className="capitalize">{job.location}</span>
-                  </span>
-                )}
-                {job.type && job.type !== "Unknown" && (
-                  <span className="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full flex items-center gap-1">
-                    <Briefcase className="w-3 h-3" />
-                    <span className="capitalize">{job.type}</span>
-                  </span>
-                )}
-                {job.work_type && job.work_type !== "Unknown" && (
-                  <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full flex items-center gap-1">
-                    <Building className="w-3 h-3" />
-                    <span className="capitalize">{job.work_type}</span>
-                  </span>
-                )}
-             </div>
-             <div className="flex items-center gap-2 font-medium text-gray-700 text-[18px] mb-2">
-                {job.salary && job.salary !== "Not specified" ? (
-                  <span>
-                    {"Rp"} {job.salary} / Bulan
-                  </span>
-                ) : (
-                  <span className="text-gray-500">Rp. -</span>
-                )}
-              </div>
-             {/* <Separator /> */}
-             {/* <div className="flex gap-4 justify-between">
-               <div className="flex flex-col gap-2">
-                 <span className="text-[13px] font-medium">
-                   Education Requirement
-                 </span>
-                 <span className="font-bold text-[16px] text-blue-600">S1</span>
-               </div>
-               <div className="flex flex-col gap-2">
-                 <span className="text-[13px] font-medium">Department</span>
-                 <span className="font-bold text-[16px] text-blue-600">
-                   Marketing
-                 </span>
-               </div>
-               <div className="flex flex-col gap-2">
-                 <span className="text-[13px] font-medium">Location</span>
-                 <span className="font-bold text-[16px] text-blue-600">
-                   Remote
-                 </span>
-               </div>
-               <div className="flex flex-col gap-2">
-                 <span className="text-[13px] font-medium">Sub-Departement</span>
-                 <span className="font-bold text-[16px] text-blue-600">
-                   Marketing
-                 </span>
-               </div>
-             </div> */}
-             <Separator />
-             <div className="flex flex-col gap-4">
-               <h1 className="font-semibold">Deskripsi Pekerjaan</h1>
-               <div
-                  className="text-gray-500 leading-7 tracking-wide text-[14px]"
-                  dangerouslySetInnerHTML={{ __html: job.description }}
-                />
-             </div>
 
-           </div>
-           <div className="col-span-3 flex flex-col gap-2 p-4">
-             <div className="flex items-center gap-4 mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 sm:p-6 lg:p-8">
+          <div className="lg:col-span-9 flex flex-col gap-6">
+            <h1 className="text-[22px] sm:text-[24px] lg:text-[28px] font-bold">{job.title}</h1>
+
+            <div className="flex flex-wrap gap-2">
+              {job.location && job.location !== "Unknown" && (
+                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center gap-1">
+                  <MapPin className="w-3 h-3" />
+                  <span className="capitalize">{job.location}</span>
+                </span>
+              )}
+              {job.type && job.type !== "Unknown" && (
+                <span className="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full flex items-center gap-1">
+                  <Briefcase className="w-3 h-3" />
+                  <span className="capitalize">{job.type}</span>
+                </span>
+              )}
+              {job.work_type && job.work_type !== "Unknown" && (
+                <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full flex items-center gap-1">
+                  <Building className="w-3 h-3" />
+                  <span className="capitalize">{job.work_type}</span>
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 font-medium text-gray-700 text-[16px] sm:text-[18px] mb-2">
+              {job.salary && job.salary !== "Not specified" ? (
+                <span>
+                  {"Rp"} {job.salary} / Bulan
+                </span>
+              ) : (
+                <span className="text-gray-500">Rp. -</span>
+              )}
+            </div>
+
+            <Separator />
+
+            <div className="flex flex-col gap-4">
+              <h1 className="font-semibold">Deskripsi Pekerjaan</h1>
+              <div
+                className="text-gray-500 leading-7 tracking-wide text-[14px]"
+                dangerouslySetInnerHTML={{ __html: job.description }}
+              />
+            </div>
+          </div>
+
+          <div className="lg:col-span-3 flex flex-col gap-4 p-4 bg-gray-50 rounded-xl shadow-sm">
+            <div className="flex items-center gap-4">
               <Avatar className="w-12 h-12 rounded-sm flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
                 <AvatarImage
                   src={`https://api.career.coptera.id/${job.company_image}`}
@@ -191,40 +168,35 @@ export default function JobCard({ job }: { job: any }) {
                   className="object-cover w-full h-full"
                 />
               </Avatar>
-               <div>
-                 <h3 className="text-[14px] font-semibold text-left">
-                   {job.company}
-                 </h3>
-                 <span className="text-gray-500 text-[12px]">
-                   {job.company_address}
-                 </span>
-               </div>
-             </div>
-             <div className="my-4">
-               <h2 className="text-[14px] font-semibold">Tentang Perusahaan</h2>
-               <div
-                  className="text-gray-500 leading-7 tracking-wide text-[14px]"
-                  dangerouslySetInnerHTML={{ __html: job.company_description }}
-                />
-             </div>
-             <Separator className="my-4" />
-             <Link
-                href={job.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-             >
-               <Button variant={"brand"} className="w-full">
-                <Send className="h-4 w-4" />
-                  Apply
-                </Button>
-             </Link>
-             {/* <Button variant={"outline"} className="flex gap-2 items-center">
-               <Share2 className="h-4 w-4" />
-               Share
-             </Button> */}
-           </div>
-         </div>
+              <div>
+                <h3 className="text-[14px] font-semibold text-left">{job.company}</h3>
+                <span className="text-gray-500 text-[12px]">{job.company_address}</span>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-[14px] font-semibold">Tentang Perusahaan</h2>
+              <div
+                className="text-gray-500 leading-7 tracking-wide text-[14px]"
+                dangerouslySetInnerHTML={{ __html: job.company_description }}
+              />
+            </div>
+
+            <Separator className="my-4" />
+
+            <Link
+              href={job.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
+            >
+              <Button variant="brand" className="w-full">
+                <Send className="h-4 w-4 mr-2" />
+                Apply
+              </Button>
+            </Link>
+          </div>
+        </div>
       </SheetContent>
     </Sheet>
   );

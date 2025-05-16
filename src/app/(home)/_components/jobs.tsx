@@ -42,7 +42,6 @@ export default function Jobs() {
             experience: job.experience || "No experience specified",
           }));
 
-          console.log("Data pekerjaan:", formattedJobs);
           setJobs(formattedJobs);
         } else {
           console.error("Data yang diterima bukan array:", jobs);
@@ -55,9 +54,8 @@ export default function Jobs() {
     fetchJobs();
   }, []);
 
-  console.log(jobs);
   return (
-    <section className="bg-white px-6 py-12 md:py-16 lg:py-24 lg:px-20 sm:px-6 md:px-12">
+    <section className="bg-white px-6 py-12 md:py-16 lg:py-24 lg:px-20 sm:px-6 md:px-12 relative z-50">
       <div className="mt-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">

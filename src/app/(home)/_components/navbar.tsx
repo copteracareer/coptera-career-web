@@ -22,9 +22,9 @@ export default function Navbar() {
       {/* Logo */}
       <Link href="/" className="flex items-center">
         <Image
-          src="/img/logo/primary.png"
+          src="/img/logo/alternatife-2.png"
           alt="Primary Logo"
-          width={175}
+          width={100}
           height={75}
           priority
         />

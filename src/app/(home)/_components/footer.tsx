@@ -10,10 +10,10 @@ const Footer = () => {
         {/* Left Section */}
         <div className="flex-1">
           <Image
-            src="/img/logo/secondary.png"
+            src="/img/logo/alternatife.png"
             alt="Logo"
             className="mr-1"
-            width={150}
+            width={100}
             height={150}
           />
           <p className="text-sm mt-5">

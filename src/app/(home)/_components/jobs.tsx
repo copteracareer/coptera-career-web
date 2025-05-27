@@ -37,7 +37,9 @@ export default function Jobs() {
                 }
               : null,
             category: job.category || "Unknown",
-            type: job.jobClassification ? job.jobClassification.name || "Unknown" : "Unknown",
+            type: job.jobClassification
+              ? job.jobClassification.name || "Unknown"
+              : "Unknown",
             requirement: job.requirement || "No requirement specified",
             experience: job.experience || "No experience specified",
           }));
@@ -85,8 +87,9 @@ export default function Jobs() {
                 id: job.id,
                 title: job.title,
                 company: job.company ? job.company.name : "Unknown Company",
-                company_description:
-                  job.description || "No description available",
+                company_description: job.company
+                  ? job.company.description
+                  : "No description available",
                 company_image: job.company ? job.company.image : "",
                 location: job.city ? job.city.name : "Indonesia",
                 type: job.type || "Unknown Type",

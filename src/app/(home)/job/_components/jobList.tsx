@@ -16,10 +16,14 @@ export default function JobList({ jobs }: JobListProps) {
             id: job.id,
             title: job.title.charAt(0).toUpperCase() + job.title.slice(1),
             company: job.company ? job.company.name : "Unknown Company",
-            company_description: job.description || "No description available",
+            company_description: job.company
+              ? job.company.description
+              : "No description available",
             company_image: job.company ? job.company.image : "",
             location: job.city ? job.city.name : "Indonesia",
-            type: job.jobClassification ? job.jobClassification.name || "Unknown" : "Unknown",
+            type: job.jobClassification
+              ? job.jobClassification.name || "Unknown"
+              : "Unknown",
             experience: job.experience || "No experience specified",
             description: job.description || "No description available",
             link: job.link || "#",

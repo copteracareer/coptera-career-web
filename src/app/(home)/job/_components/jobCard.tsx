@@ -1,3 +1,8 @@
+'use client';
+
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Briefcase, Building, Clock, GraduationCap, Layers, MapPin, Send } from "lucide-react";
 import {
   Sheet,
@@ -12,10 +17,37 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function JobCard({ job }: { job: any }) {
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setOpen(false);
+    };
+
+    if (open) {
+      window.history.pushState({ sheetOpen: true }, "", "?job=open");
+      window.addEventListener("popstate", handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [open]);
+
   return (
-    <Sheet>
+    <Sheet
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          window.history.replaceState(null, "", pathname);
+        }
+      }}
+    >
       <SheetTrigger asChild>
-      <div className="p-4 rounded-xl border border-gray-200 transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer">
+      <div onClick={() => setOpen(true)} className="p-4 rounded-xl border border-gray-200 transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer">
           <div className="flex items-start gap-3">
             {/* Company Logo Placeholder */}
             {job.company_image ? (
@@ -113,8 +145,8 @@ export default function JobCard({ job }: { job: any }) {
           <SheetTitle>Detail Pekerjaan</SheetTitle>
         </SheetHeader>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 sm:p-6 lg:p-8">
-          <div className="lg:col-span-9 flex flex-col gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-2 lg:p-8">
+          <div className="lg:col-span-8 flex flex-col gap-6">
             <h1 className="text-[22px] sm:text-[24px] lg:text-[28px] font-bold">{job.title}</h1>
 
             <div className="flex flex-wrap gap-2">
@@ -159,7 +191,21 @@ export default function JobCard({ job }: { job: any }) {
             </div>
           </div>
 
-          <div className="lg:col-span-3 flex flex-col gap-4 p-4 bg-gray-50 rounded-xl shadow-sm">
+          <div className="lg:col-span-4 flex flex-col gap-4 p-4 bg-gray-50 rounded-xl shadow-sm">
+            <Link
+              href={job.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
+            >
+              <Button variant="brand" className="w-full">
+                <Send className="h-4 w-4 mr-2" />
+                Apply
+              </Button>
+            </Link>
+
+            <Separator className="my-4" />
+
             <div className="flex items-center gap-4">
               <Avatar className="w-12 h-12 rounded-sm flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
                 <AvatarImage
@@ -181,20 +227,6 @@ export default function JobCard({ job }: { job: any }) {
                 dangerouslySetInnerHTML={{ __html: job.company_description }}
               />
             </div>
-
-            <Separator className="my-4" />
-
-            <Link
-              href={job.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full"
-            >
-              <Button variant="brand" className="w-full">
-                <Send className="h-4 w-4 mr-2" />
-                Apply
-              </Button>
-            </Link>
           </div>
         </div>
       </SheetContent>

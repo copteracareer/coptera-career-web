@@ -107,6 +107,7 @@ export default function Jobs() {
                 brand: job.company ? job.company.brand : "",
                 requirement: job.requirement || "No requirement specified",
                 work_type: job.work_type || "Unknown",
+                company_email: job.company?.email,
               }}
             />
           ))}

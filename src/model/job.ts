@@ -33,11 +33,13 @@ export interface JobVacancy {
   experience?: string;
   jobType?: JobType | null;
   jobClassification?: JobType | null;
+  company_email?: string;
 }
 
 export interface Company {
   id: number;
   name: string;
+  email?: string;
   brand?: string;
   description?: string;
   address?: string;

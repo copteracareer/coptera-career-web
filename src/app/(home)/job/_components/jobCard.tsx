@@ -193,7 +193,7 @@ export default function JobCard({ job }: { job: any }) {
 
           <div className="lg:col-span-4 flex flex-col gap-4 p-4 bg-gray-50 rounded-xl shadow-sm">
             <Link
-              href={job.link}
+              href={job.company_email ? `mailto:${job.company_email}` : job.link}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full"

@@ -37,6 +37,7 @@ export default function JobList({ jobs }: JobListProps) {
             brand: job.company ? job.company.brand : "",
             requirement: job.requirement || "No requirement specified",
             work_type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
+            company_email: job.company?.user?.email,
           }}
         />
       ))}

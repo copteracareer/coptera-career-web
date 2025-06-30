@@ -39,6 +39,7 @@ export interface JobVacancy {
 export interface Company {
   id: number;
   name: string;
+  email?: string;
   brand?: string;
   description?: string;
   address?: string;

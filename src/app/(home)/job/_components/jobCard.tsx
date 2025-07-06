@@ -1,9 +1,17 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-import { Briefcase, Building, Clock, GraduationCap, Layers, MapPin, Send } from "lucide-react";
+import {
+  Briefcase,
+  Building,
+  Clock,
+  GraduationCap,
+  Layers,
+  MapPin,
+  Send,
+} from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -29,6 +37,7 @@ export default function JobCard({ job }: { job: any }) {
     if (open) {
       window.history.pushState({ sheetOpen: true }, "", "?job=open");
       window.addEventListener("popstate", handlePopState);
+      console.log(job);
     }
 
     return () => {
@@ -47,7 +56,10 @@ export default function JobCard({ job }: { job: any }) {
       }}
     >
       <SheetTrigger asChild>
-      <div onClick={() => setOpen(true)} className="p-4 rounded-xl border border-gray-200 transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer">
+        <div
+          onClick={() => setOpen(true)}
+          className="p-4 rounded-xl border border-gray-200 transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer"
+        >
           <div className="flex items-start gap-3">
             {/* Company Logo Placeholder */}
             {job.company_image ? (
@@ -61,7 +73,9 @@ export default function JobCard({ job }: { job: any }) {
             ) : (
               <div className="w-12 h-12 bg-blue-500 rounded-sm flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-bold">
-                  {typeof job.company === 'string' ? job.company.charAt(0) : job.company.name.charAt(0)}
+                  {typeof job.company === "string"
+                    ? job.company.charAt(0)
+                    : job.company.name.charAt(0)}
                 </span>
               </div>
             )}
@@ -72,13 +86,14 @@ export default function JobCard({ job }: { job: any }) {
                 {job.title}
               </h1>
               <h3 className="text-gray-500 text-sm capitalize">
-                {typeof job.company === 'string' ? job.company : job.company.name}
+                {typeof job.company === "string"
+                  ? job.company
+                  : job.company.name}
               </h3>
               {/* Job Title */}
             </div>
           </div>
 
-          
           {/* Job Categories & Types */}
           <div className="flex flex-wrap gap-2 mb-3 mt-4">
             {job.location && job.location !== "Unknown" && (
@@ -130,11 +145,21 @@ export default function JobCard({ job }: { job: any }) {
           {job.due_date && (
             <div className="flex items-center gap-2 text-gray-700 text-sm">
               <Clock className="w-4 h-4 text-gray-500" />
-              <span className={`${new Date() > job.due_date ? 'text-red-500' : 'text-gray-700'}`}>
-                {job.due_date.toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'})}
+              <span
+                className={`${
+                  new Date() > job.due_date ? "text-red-500" : "text-gray-700"
+                }`}
+              >
+                {job.due_date.toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
               </span>
               {new Date() > job.due_date && (
-                <span className="text-xs bg-red-100 text-red-800 px-2 py-0.5 rounded-full">Expired</span>
+                <span className="text-xs bg-red-100 text-red-800 px-2 py-0.5 rounded-full">
+                  Expired
+                </span>
               )}
             </div>
           )}
@@ -147,7 +172,9 @@ export default function JobCard({ job }: { job: any }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-2 lg:p-8">
           <div className="lg:col-span-8 flex flex-col gap-6">
-            <h1 className="text-[22px] sm:text-[24px] lg:text-[28px] font-bold">{job.title}</h1>
+            <h1 className="text-[22px] sm:text-[24px] lg:text-[28px] font-bold">
+              {job.title}
+            </h1>
 
             <div className="flex flex-wrap gap-2">
               {job.location && job.location !== "Unknown" && (
@@ -193,7 +220,13 @@ export default function JobCard({ job }: { job: any }) {
 
           <div className="lg:col-span-4 flex flex-col gap-4 p-4 bg-gray-50 rounded-xl shadow-sm">
             <Link
-              href={job.company_email ? `mailto:${job.company_email}` : job.link}
+              href={
+                job.company_email
+                  ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                      job.company_email
+                    )}`
+                  : job.link
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="w-full"
@@ -203,9 +236,7 @@ export default function JobCard({ job }: { job: any }) {
                 Apply
               </Button>
             </Link>
-
             <Separator className="my-4" />
-
             <div className="flex items-center gap-4">
               <Avatar className="w-12 h-12 rounded-sm flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
                 <AvatarImage
@@ -215,11 +246,14 @@ export default function JobCard({ job }: { job: any }) {
                 />
               </Avatar>
               <div>
-                <h3 className="text-[14px] font-semibold text-left">{job.company}</h3>
-                <span className="text-gray-500 text-[12px]">{job.company_address}</span>
+                <h3 className="text-[14px] font-semibold text-left">
+                  {job.company}
+                </h3>
+                <span className="text-gray-500 text-[12px]">
+                  {job.company_address}
+                </span>
               </div>
             </div>
-
             <div>
               <h2 className="text-[14px] font-semibold">Tentang Perusahaan</h2>
               <div

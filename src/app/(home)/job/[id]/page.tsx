@@ -5,6 +5,8 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { JobVacancy } from "@/model/job";
 import JobCard from "../_components/jobCard";
 import { timeAgo } from "@/utils/helper";
+import { Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type JobDetailPageProps = {
   params: { id: string };
@@ -98,144 +100,165 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
           <span className="font-semibold text-black text-base">Kembali</span>
         </Link>
         <div className="flex flex-col space-y-[40px]">
-          <div className="flex flex-col lg:flex-row p-9 justify-between border border-[#737373] rounded-[18px] space-y-2">
-            <div className="flex flex-col space-y-8">
-              <div className="flex items-start gap-3">
-                {/* Company Logo Placeholder */}
-                {job.company_image || job.company.image ? (
-                  <Avatar className="w-14 h-14 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
-                    <AvatarImage
-                      src={`https://api.career.coptera.id/${
-                        job.company_image
-                          ? job.company_image
-                          : job.company.image
-                      }`}
-                      alt={
-                        job.company_name ? job.company_name : job.company.name
-                      }
-                      className="object-cover w-full h-full"
-                    />
-                  </Avatar>
-                ) : (
-                  <div className="w-12 h-12 bg-blue-500 rounded-sm flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">
-                      {job.company_name
-                        ? job.company_name.charAt(0)
-                        : job.company.name.charAt(0)}
-                    </span>
-                  </div>
-                )}
-
-                {/* Company Details */}
-                <div className="flex-1 space-y-1">
-                  <h1
-                    className="font-semibold text-black text-xl group-hover:text-blue-400 transition-colors text-left capitalize font-semibold line-clamp-1"
-                    title={job.title}
-                  >
-                    {job.title}
-                  </h1>
-                  <div className="flex flex row space-x-1 items-center">
-                    {job.company && job.company.is_verified ? (
-                      <img
-                        src="/img/icon/i-secure.png"
-                        alt="icon verified"
-                        className="h-6 w-6"
-                      />
-                    ) : (
-                      ""
-                    )}
-                    <h3 className="text-[#155DFC] text-lg font-medium">
-                      {job.company_name ? job.company_name : job.company.name}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col space-y-2 my-5 text-black font-normal text-base">
-                {job.city && job.city.name && (
-                  <div className="flex flex-row items-center space-x-2.5">
-                    <img
-                      src="/img/icon/i-location-blue.png"
-                      alt="icon location"
-                      className="h-6 w-6"
-                    />
-                    <span className="capitalize">{job.city.name}</span>
-                  </div>
-                )}
-                {job.jobType && (
-                  <div className="flex flex-row items-center space-x-2.5">
-                    <img
-                      src="/img/icon/i-suitcase-blue.png"
-                      alt="icon job type"
-                      className="h-6 w-6"
-                    />
-                    <span className="capitalize">{job.jobType.name}</span>
-                  </div>
-                )}
-                {job.work_type && job.work_type !== "Unknown" && (
-                  <div className="flex flex-row items-center space-x-2.5">
-                    <img
-                      src="/img/icon/i-building-blue.png"
-                      alt="icon work type"
-                      className="h-6 w-6"
-                    />
-                    <span className="capitalize">
-                      {job.work_type.charAt(0).toUpperCase() +
-                        job.work_type.slice(1)}
-                    </span>
-                  </div>
-                )}
-                <div className="flex flex-row items-center space-x-2.5">
-                  <img
-                    src="/img/icon/i-money-blue.png"
-                    alt="icon salary"
-                    className="h-6 w-6"
-                  />
-                  {job.jobVacancySalary ? (
-                    <span>
-                      {"Rp "}
-                      {job.jobVacancySalary.minimum
-                        ? job.jobVacancySalary.minimum.toLocaleString()
-                        : "-"}
-                      -
-                      {job.jobVacancySalary.maximum
-                        ? job.jobVacancySalary.maximum.toLocaleString()
-                        : "-"}
-                      {job.jobVacancySalary.currency || "-"} / Bulan
-                    </span>
-                  ) : (
-                    <span>Rp. -</span>
-                  )}
-                </div>
-              </div>
-            </div>
-            {job.jobVacancyFacilities.length > 0 ? (
+          <div className="flex flex-col p-9 border border-[#737373] rounded-[18px] space-y-4">
+            <div className="flex flex-col lg:flex-row justify-between space-y-2">
               <div className="flex flex-col space-y-8">
-                <div className="flex flex-col space-y-3 lg:space-y-6">
-                  <h2 className="font-bold text-[#171717] text-xl">Benefit</h2>
-                  {job.jobVacancyFacilities.map((facility, indexFacility) => (
-                    <div
-                      className="flex flex-row items-center space-x-[14px] font-medium text-base"
-                      key={indexFacility}
+                <div className="flex items-start gap-3">
+                  {/* Company Logo Placeholder */}
+                  {job.company_image || job.company.image ? (
+                    <Avatar className="w-14 h-14 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
+                      <AvatarImage
+                        src={`https://api.career.coptera.id/${
+                          job.company_image
+                            ? job.company_image
+                            : job.company.image
+                        }`}
+                        alt={
+                          job.company_name ? job.company_name : job.company.name
+                        }
+                        className="object-cover w-full h-full"
+                      />
+                    </Avatar>
+                  ) : (
+                    <div className="w-12 h-12 bg-blue-500 rounded-sm flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold">
+                        {job.company_name
+                          ? job.company_name.charAt(0)
+                          : job.company.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Company Details */}
+                  <div className="flex-1 space-y-1">
+                    <h1
+                      className="font-semibold text-black text-xl group-hover:text-blue-400 transition-colors text-left capitalize font-semibold line-clamp-1"
+                      title={job.title}
                     >
-                      {facility.jobFacility.image ? (
+                      {job.title}
+                    </h1>
+                    <div className="flex flex row space-x-1 items-center">
+                      {job.company && job.company.is_verified ? (
                         <img
-                          src={`https://api.career.coptera.id/${facility.jobFacility.image}`}
-                          alt={facility.jobFacility.name}
+                          src="/img/icon/i-secure.png"
+                          alt="icon verified"
                           className="h-6 w-6"
                         />
                       ) : (
-                        <div className="h-6 w-6 flex items-center">
-                          <span className="m-auto"> • </span>
-                        </div>
+                        ""
                       )}
-                      <span>{facility.jobFacility.name}</span>
+                      <h3 className="text-[#155DFC] text-lg font-medium">
+                        {job.company_name ? job.company_name : job.company.name}
+                      </h3>
                     </div>
-                  ))}
+                  </div>
+                </div>
+                <div className="flex flex-col space-y-2 my-5 text-black font-normal text-base">
+                  {job.city && job.city.name && (
+                    <div className="flex flex-row items-center space-x-2.5">
+                      <img
+                        src="/img/icon/i-location-blue.png"
+                        alt="icon location"
+                        className="h-6 w-6"
+                      />
+                      <span className="capitalize">{job.city.name}</span>
+                    </div>
+                  )}
+                  {job.jobType && (
+                    <div className="flex flex-row items-center space-x-2.5">
+                      <img
+                        src="/img/icon/i-suitcase-blue.png"
+                        alt="icon job type"
+                        className="h-6 w-6"
+                      />
+                      <span className="capitalize">{job.jobType.name}</span>
+                    </div>
+                  )}
+                  {job.work_type && job.work_type !== "Unknown" && (
+                    <div className="flex flex-row items-center space-x-2.5">
+                      <img
+                        src="/img/icon/i-building-blue.png"
+                        alt="icon work type"
+                        className="h-6 w-6"
+                      />
+                      <span className="capitalize">
+                        {job.work_type.charAt(0).toUpperCase() +
+                          job.work_type.slice(1)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex flex-row items-center space-x-2.5">
+                    <img
+                      src="/img/icon/i-money-blue.png"
+                      alt="icon salary"
+                      className="h-6 w-6"
+                    />
+                    {job.jobVacancySalary ? (
+                      <span>
+                        {"Rp "}
+                        {job.jobVacancySalary.minimum
+                          ? job.jobVacancySalary.minimum.toLocaleString()
+                          : "-"}
+                        -
+                        {job.jobVacancySalary.maximum
+                          ? job.jobVacancySalary.maximum.toLocaleString()
+                          : "-"}
+                        {job.jobVacancySalary.currency || "-"} / Bulan
+                      </span>
+                    ) : (
+                      <span>Rp. -</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            ) : (
-              ""
-            )}
+              {job.jobVacancyFacilities.length > 0 ? (
+                <div className="flex flex-col space-y-8">
+                  <div className="flex flex-col space-y-3 lg:space-y-6">
+                    <h2 className="font-bold text-[#171717] text-xl">
+                      Benefit
+                    </h2>
+                    {job.jobVacancyFacilities.map((facility, indexFacility) => (
+                      <div
+                        className="flex flex-row items-center space-x-[14px] font-medium text-base"
+                        key={indexFacility}
+                      >
+                        {facility.jobFacility.image ? (
+                          <img
+                            src={`https://api.career.coptera.id/${facility.jobFacility.image}`}
+                            alt={facility.jobFacility.name}
+                            className="h-6 w-6"
+                          />
+                        ) : (
+                          <div className="h-6 w-6 flex items-center">
+                            <span className="m-auto"> • </span>
+                          </div>
+                        )}
+                        <span>{facility.jobFacility.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="flex shrink-0">
+              <Link
+                href={
+                  job.company && job.company.user?.email
+                    ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                        job.company.user.email
+                      )}`
+                    : job.link
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="brand" className="py-2 px-[50px]">
+                  Lamar
+                </Button>
+              </Link>
+            </div>
           </div>
           <div className="flex flex-col gap-4">
             <h2 className="font-bold text-xl">Deskripsi Pekerjaan</h2>

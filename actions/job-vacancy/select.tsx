@@ -51,6 +51,15 @@ export interface Company {
   is_verified: boolean;
   is_partner: boolean;
   companyType: CompanyType;
+  user?: {
+    id: number;
+    email: string;
+    telephone: string;
+    userLevel: {
+      id: number;
+      name: string;
+    };
+  };
 }
 
 export interface City {

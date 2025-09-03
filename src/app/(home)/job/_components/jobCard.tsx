@@ -55,15 +55,13 @@ export default function JobCard({ job }: { job: any }) {
         }
       }}
     >
-      <SheetTrigger asChild>
-        <div
-          onClick={() => setOpen(true)}
-          className="p-4 rounded-xl border border-gray-200 transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer"
-        >
+      {/* <SheetTrigger asChild> */}
+      <Link href={`/job/${job.id}`}>
+        <div className="p-4 rounded-xl border border-[#F5F5F5] shadow-[0_1px_4px_0px_rgba(0,0,0,0.4)] transition-colors group hover:bg-gradient-to-r hover:from-blue-100/75 hover:to-[#FFFFFF] cursor-pointer">
           <div className="flex items-start gap-3">
             {/* Company Logo Placeholder */}
             {job.company_image ? (
-              <Avatar className="w-12 h-12 rounded-sm flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
+              <Avatar className="w-14 h-14 rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center bg-white border border-gray-200 shadow-sm">
                 <AvatarImage
                   src={`https://api.career.coptera.id/${job.company_image}`}
                   alt={job.company}
@@ -82,20 +80,89 @@ export default function JobCard({ job }: { job: any }) {
 
             {/* Company Details */}
             <div className="flex-1">
-              <h1 className="font-semibold text-gray-700 text-xl group-hover:text-blue-400 transition-colors text-left capitalize">
+              <h1
+                className="font-semibold text-black text-xl group-hover:text-blue-400 transition-colors text-left capitalize font-semibold line-clamp-1"
+                title={job.title}
+              >
                 {job.title}
               </h1>
-              <h3 className="text-gray-500 text-sm capitalize">
-                {typeof job.company === "string"
-                  ? job.company
-                  : job.company.name}
-              </h3>
+              <div className="flex flex row space-x-1 items-center">
+                <h3 className="text-[#155DFC] text-lg font-medium">
+                  {typeof job.company === "string"
+                    ? job.company
+                    : job.company.name}
+                </h3>
+                {job.is_company_verified ? (
+                  <img
+                    src="/img/icon/i-verified.png"
+                    alt="icon verified"
+                    className="h-6 w-6"
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
               {/* Job Title */}
+              {/* Job Posting Dates */}
+              <div className="flex-1 mt-1 text-sm font-normal text-[#737373]">
+                {job.posting_date}
+              </div>
             </div>
           </div>
 
+          <div className="flex flex-col space-y-2 my-5 text-black font-normal text-base">
+            {job.location && job.location !== "Unknown" && (
+              <div className="flex flex-row items-center space-x-2.5">
+                <img
+                  src="/img/icon/i-location.png"
+                  alt="icon location"
+                  className="h-6 w-6"
+                />
+                <span className="capitalize">{job.location}</span>
+              </div>
+            )}
+            {job.type && job.type !== "Unknown" && (
+              <div className="flex flex-row items-center space-x-2.5">
+                <img
+                  src="/img/icon/i-suitcase.png"
+                  alt="icon job type"
+                  className="h-6 w-6"
+                />
+                <span className="capitalize">
+                  {job.type} • {job.experience}{" "}
+                </span>
+              </div>
+            )}
+            {job.work_type && job.work_type !== "Unknown" && (
+              <div className="flex flex-row items-center space-x-2.5">
+                <img
+                  src="/img/icon/i-work-type.png"
+                  alt="icon work type"
+                  className="h-6 w-6"
+                />
+                <span className="capitalize">
+                  {job.work_type.charAt(0).toUpperCase() +
+                    job.work_type.slice(1)}
+                </span>
+              </div>
+            )}
+            <div className="flex flex-row items-center space-x-2.5">
+              <img
+                src="/img/icon/i-salary.png"
+                alt="icon salary"
+                className="h-6 w-6"
+              />
+              {job.salary && job.salary !== "Not specified" ? (
+                <span>
+                  {"Rp"} {job.salary} / Bulan
+                </span>
+              ) : (
+                <span>Rp. -</span>
+              )}
+            </div>
+          </div>
           {/* Job Categories & Types */}
-          <div className="flex flex-wrap gap-2 mb-3 mt-4">
+          {/* <div className="flex flex-wrap gap-2 mb-3 mt-4">
             {job.location && job.location !== "Unknown" && (
               <span className="text-xs rounded-full flex items-center text-muted-foreground font-medium gap-1">
                 <MapPin className="w-3 h-3" />
@@ -128,10 +195,10 @@ export default function JobCard({ job }: { job: any }) {
                 <span className="capitalize">{job.experience}</span>
               </span>
             )}
-          </div>
+          </div> */}
 
           {/* Salary Information */}
-          <div className="flex items-center gap-2 font-medium text-gray-700 text-sm mb-2">
+          {/* <div className="flex items-center gap-2 font-medium text-gray-700 text-sm mb-2">
             {job.salary && job.salary !== "Not specified" ? (
               <span>
                 {"Rp"} {job.salary} / Bulan
@@ -139,10 +206,10 @@ export default function JobCard({ job }: { job: any }) {
             ) : (
               <span className="text-gray-500">Rp. -</span>
             )}
-          </div>
+          </div> */}
 
           {/* Due Date */}
-          {job.due_date && (
+          {/* {job.due_date && (
             <div className="flex items-center gap-2 text-gray-700 text-sm">
               <Clock className="w-4 h-4 text-gray-500" />
               <span
@@ -162,9 +229,10 @@ export default function JobCard({ job }: { job: any }) {
                 </span>
               )}
             </div>
-          )}
+          )} */}
         </div>
-      </SheetTrigger>
+      </Link>
+      {/* </SheetTrigger> */}
       <SheetContent className="w-[400px] sm:w-[1200px] sm:max-w-none z-[999999] overflow-auto">
         <SheetHeader>
           <SheetTitle>Detail Pekerjaan</SheetTitle>

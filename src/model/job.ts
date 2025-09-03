@@ -31,9 +31,11 @@ export interface JobVacancy {
   type?: string;
   requirement?: string;
   experience?: string;
+  jobExperience?: JobExperience | null;
   jobType?: JobType | null;
   jobClassification?: JobType | null;
   company_email?: string;
+  created_at: Date;
 }
 
 export interface Company {
@@ -95,4 +97,33 @@ export interface JobVacancySalary {
 export interface JobType {
   id: number;
   name: string;
+}
+
+export interface JobExperience {
+  id: number;
+  name: string;
+}
+
+export interface JobClassification {
+  id: number;
+  name: string;
+}
+
+export interface ApiResponse<T> {
+  status: boolean;
+  message: string;
+  data: {
+    page: number;
+    limit: string;
+    totalRecord: number;
+    totalPage: number;
+    filterRecord: number;
+    data: T;
+  };
+}
+
+export interface ApiResponseDetail<T> {
+  status: boolean;
+  message: string;
+  data: T;
 }

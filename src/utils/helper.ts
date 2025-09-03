@@ -32,3 +32,43 @@ export const formatRelativeTime = (date: string | Date): string => {
 export const shortenText = (text: string, length: number = 50): string => {
   return `${text.substring(0, length)}${text.length > length ? "..." : ""}`;
 };
+
+export const debounce = <F extends (...args: any[]) => void>(
+  func: F,
+  delay: number
+) => {
+  let timer: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<F>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
+};
+
+export const timeAgo = (createdAt: Date): string => {
+  const now = new Date();
+  const diffInSeconds = Math.floor(
+    (now.getTime() - createdAt.getTime()) / 1000
+  );
+
+  // Time units
+  const secondsInMinute = 60;
+  const secondsInHour = 60 * 60;
+  const secondsInDay = 60 * 60 * 24;
+
+  let timeAgo = "";
+
+  if (diffInSeconds < secondsInMinute) {
+    timeAgo = `${diffInSeconds} detik yang lalu`; // "x seconds ago"
+  } else if (diffInSeconds < secondsInHour) {
+    const minutes = Math.floor(diffInSeconds / secondsInMinute);
+    timeAgo = `${minutes} menit yang lalu`; // "x minutes ago"
+  } else if (diffInSeconds < secondsInDay) {
+    const hours = Math.floor(diffInSeconds / secondsInHour);
+    timeAgo = `${hours} jam yang lalu`; // "x hours ago"
+  } else {
+    const days = Math.floor(diffInSeconds / secondsInDay);
+    timeAgo = `${days} Hari yang lalu`; // "x days ago"
+  }
+
+  return timeAgo;
+};

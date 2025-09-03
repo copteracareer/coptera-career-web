@@ -17,22 +17,28 @@ interface Filters {
   job_classification_id: number[];
   education_level_id: number[];
   work_type: boolean;
+  city_id: number[];
 }
 import { useQuery } from "@tanstack/react-query";
 
 export default function FilterSidebar({
   onFilterChange,
+  initialClassificationIds = [],
+  initialCityIds = [],
 }: {
   onFilterChange: (filters: Filters) => void;
+  initialClassificationIds?: number[];
+  initialCityIds?: number[];
 }) {
   const [filters, setFilters] = useState<Filters>({
     priority: "More Relevant",
     job_type_id: [],
     job_experience_id: [],
     job_facility_id: [],
-    job_classification_id: [],
+    job_classification_id: initialClassificationIds,
     education_level_id: [],
     work_type: false,
+    city_id: initialCityIds,
   });
 
   const { data: jobFacilities = [] } = useQuery({
@@ -114,6 +120,7 @@ export default function FilterSidebar({
       job_classification_id: [],
       education_level_id: [],
       work_type: false,
+      city_id: [],
     });
   };
 
@@ -224,6 +231,9 @@ export default function FilterSidebar({
             <label key={classification.id} className="flex items-center mb-1">
               <Checkbox
                 id={`job-classification-${classification.id.toString()}`}
+                checked={filters.job_classification_id.includes(
+                  classification.id
+                )}
                 onCheckedChange={() =>
                   handleCheckboxChange(
                     "job_classification_id",

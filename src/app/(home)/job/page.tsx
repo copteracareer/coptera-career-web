@@ -6,12 +6,30 @@ import JobList from "./_components/jobList";
 import { getJobVacancies } from "../../../../actions/job-vacancy";
 import { JobVacancy } from "@/model/job";
 import { Filter } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getCityById } from "../../../../actions/cities/select";
 
 export default function Home() {
+  const router = useRouter();
   const [jobs, setJobs] = useState<JobVacancy[]>([]);
   const [filteredJobs, setFilteredJobs] = useState<JobVacancy[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+  const [searchJobTitle, setSearchJobTitle] = useState<string>("");
+  const searchParams = useSearchParams();
+  const paramJobTitle = searchParams.get("title") || "";
+  const paramJobCity = searchParams.get("city") || "";
+  const paramJobClassification = searchParams.get("classification") || "";
+  const [activeFilters, setActiveFilters] = useState<any>({
+    job_classification_id: paramJobClassification
+      ? paramJobClassification.split(",").map(Number)
+      : [],
+    city_id: paramJobCity ? paramJobCity.split(",").map(Number) : [],
+  });
+  const [cityInfo, setCityInfo] = useState<{
+    name: string;
+    province: string;
+  } | null>(null);
 
   // Ambil data pekerjaan
   useEffect(() => {
@@ -43,7 +61,10 @@ export default function Home() {
             category: job.category || "Unknown",
             type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
             requirement: job.requirement || "No requirement specified",
-            experience: job.experience || "No experience specified",
+            experience: job.jobExperience
+              ? job.jobExperience.name || "No experience specified"
+              : "No experience specified",
+            created_at: new Date(job.created_at),
           }));
 
           setFilteredJobs(formattedJobs);
@@ -59,12 +80,47 @@ export default function Home() {
     fetchJobs();
   }, []);
 
+  useEffect(() => {
+    if (jobs.length > 0) {
+      handleSearch(paramJobTitle);
+    }
+  }, [jobs, paramJobTitle]);
+
+  useEffect(() => {
+    const fetchCity = async () => {
+      if (!paramJobCity) return setCityInfo(null);
+
+      try {
+        const cityId = Number(paramJobCity.split(",")[0]);
+        const response = await getCityById(cityId);
+
+        if (response.status && response.data) {
+          setCityInfo({
+            name: response.data.name,
+            province: response.data.province ? response.data.province.name : "",
+          });
+        } else {
+          setCityInfo(null);
+        }
+      } catch (error) {
+        // console.error("Failed to fetch city info:", error);
+        setCityInfo(null);
+      }
+    };
+
+    fetchCity();
+  }, [paramJobCity]);
+
   // Menangani perubahan filter
   const handleFilterChange = useCallback(async (newFilters: any) => {
     try {
+      setActiveFilters(newFilters);
+
       const jobs = await getJobVacancies(newFilters);
       setJobs(jobs);
       setFilteredJobs(jobs);
+
+      updateUrlParams(newFilters, searchJobTitle);
     } catch (error) {
       console.error("Gagal mengambil data dengan filter:", error);
     }
@@ -72,34 +128,63 @@ export default function Home() {
 
   // Menangani pencarian pekerjaan
   const handleSearch = (query: string) => {
-    setSearchQuery(query);
+    setSearchJobTitle(query);
     const filtered = jobs.filter((job) =>
       job.title.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredJobs(filtered);
+
+    updateUrlParams(activeFilters, query);
+  };
+
+  const updateUrlParams = (filters: any, title?: string) => {
+    const params = new URLSearchParams();
+
+    if (title) params.set("title", title);
+    if (filters.job_classification_id?.length)
+      params.set("classification", filters.job_classification_id.join(","));
+    if (filters.city_id?.length) params.set("city", filters.city_id.join(","));
+
+    router.push(`/job?${params.toString()}`, { scroll: false });
   };
 
   return (
-   <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4">
+      {cityInfo && (
+        <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-5">
+          Job Vacancy in {cityInfo.name}
+          {cityInfo.province ? ", " + cityInfo.province : ""}
+        </h1>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Desktop Filter */}
         <div className="hidden md:block">
-          <FilterSidebar onFilterChange={handleFilterChange} />
+          <FilterSidebar
+            onFilterChange={handleFilterChange}
+            initialClassificationIds={
+              paramJobClassification
+                ? paramJobClassification.split(",").map(Number)
+                : []
+            }
+            initialCityIds={
+              paramJobCity ? paramJobCity.split(",").map(Number) : []
+            }
+          />
         </div>
 
         <div className="md:col-span-3">
           {/* Mobile Filter Toggle */}
           <div className="md:hidden mb-4">
-             <button
-                onClick={() => setShowMobileFilter(true)}
-                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg md:hidden hover:bg-blue-700 transition"
-              >
-                <Filter className="w-4 h-4" />
-                Filter
-              </button>
+            <button
+              onClick={() => setShowMobileFilter(true)}
+              className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg md:hidden hover:bg-blue-700 transition"
+            >
+              <Filter className="w-4 h-4" />
+              Filter
+            </button>
           </div>
 
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar value={searchJobTitle} onSearch={handleSearch} />
           <JobList jobs={filteredJobs} />
         </div>
       </div>
@@ -120,6 +205,14 @@ export default function Home() {
             <div className="p-4">
               <FilterSidebar
                 onFilterChange={handleFilterChange}
+                initialClassificationIds={
+                  paramJobClassification
+                    ? paramJobClassification.split(",").map(Number)
+                    : []
+                }
+                initialCityIds={
+                  paramJobCity ? paramJobCity.split(",").map(Number) : []
+                }
               />
             </div>
           </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { JobClassification } from "@/model/job";
 const apiUrl = process.env.NEXT_PUBLIC_COPTERA_API as string;
 
 /**
@@ -12,10 +12,5 @@ const getJobClassification = async (): Promise<JobClassification[]> => {
 
   return response.data?.data?.data ?? [];
 };
-
-export interface JobClassification {
-  id: number;
-  name: string;
-}
 
 export default getJobClassification;

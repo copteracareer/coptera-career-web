@@ -33,10 +33,20 @@ export default function Navbar() {
       {/* Navigation for Desktop */}
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="lg:space-x-[50px]">
             <Link href="/job" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Lowongan Kerja
+              </NavigationMenuLink>
+            </Link>
+            <Link href="/home#testimoni" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Testimoni
+              </NavigationMenuLink>
+            </Link>
+            <Link href="https://S.id/copterapostingloker" target="_blank">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Pasang Loker
               </NavigationMenuLink>
             </Link>
             {/* <Link href="/accelelator" legacyBehavior passHref>
@@ -55,7 +65,7 @@ export default function Navbar() {
 "
           target="_blank"
         >
-          <Button variant="brand">Komunitas Loker</Button>
+          <Button variant="brand">Join Komunitas Loker</Button>
         </Link>
         {/* <Button
           variant="outline"

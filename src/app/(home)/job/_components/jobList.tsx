@@ -1,5 +1,6 @@
 import { JobVacancy } from "@/model/job";
 import JobCard from "./jobCard";
+import { timeAgo } from "@/utils/helper";
 
 interface JobListProps {
   jobs: JobVacancy[];
@@ -19,11 +20,14 @@ export default function JobList({ jobs }: JobListProps) {
               ? job.company.description
               : "No description available",
             company_image: job.company ? job.company.image : "",
+            is_company_verified: job.company ? job.company.is_verified : 0,
             location: job.city ? job.city.name : "Indonesia",
             type: job.jobClassification
               ? job.jobClassification.name || "Unknown"
               : "Unknown",
-            experience: job.experience || "No experience specified",
+            experience: job.jobExperience
+              ? job.jobExperience.name
+              : "No experience specified",
             description: job.description || "No description available",
             link: job.link || "#",
             salary:
@@ -37,6 +41,7 @@ export default function JobList({ jobs }: JobListProps) {
             requirement: job.requirement || "No requirement specified",
             work_type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
             company_email: job.company?.user?.email,
+            posting_date: timeAgo(new Date(job.created_at)),
           }}
         />
       ))}

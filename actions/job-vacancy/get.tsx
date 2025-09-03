@@ -10,6 +10,8 @@ type JobFilterParams = {
   job_classification_id?: number[];
   education_level_id?: number[];
   work_type?: string[];
+  city_id?: number[];
+  limit?: number;
 };
 
 /**
@@ -39,6 +41,12 @@ const getJobVacancies = async (
   }
   if (filters?.work_type?.length) {
     params.set("work_type", filters.work_type.join(","));
+  }
+  if (filters?.city_id?.length) {
+    params.set("city_id", filters.city_id.join(","));
+  }
+  if (filters?.limit) {
+    params.set("limit", filters.limit.toString());
   }
 
   const response = await axios.get(

@@ -100,6 +100,21 @@ export default function Navbar() {
           >
             Lowongan Kerja
           </Link>
+          <Link
+            href="/home#testimoni"
+            className="block py-2 text-sm font-medium text-gray-700 w-full"
+            onClick={() => setMenuOpen(false)}
+          >
+            Testimoni
+          </Link>
+          <Link
+            href="https://S.id/copterapostingloker"
+            target="_blank"
+            className="block py-2 text-sm font-medium text-gray-700 w-full"
+            onClick={() => setMenuOpen(false)}
+          >
+            Pasang Loker
+          </Link>
           {/* <Link
             href="/docs"
             className="block py-2 text-sm font-medium text-gray-700 w-full"

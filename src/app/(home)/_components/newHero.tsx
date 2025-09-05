@@ -96,7 +96,7 @@ const NewHero = () => {
   };
 
   return (
-    <div className="wrapper bg-white px-4 pt-[100px] pb-[50px] sm:px-10 lg:px-20">
+    <div className="wrapper bg-white px-4 pt-[50px] md:pt-[100px] pb-[50px] sm:px-10 lg:px-20">
       <div className="flex flex-col flex-col-reverse md:flex-row md:space-x-8 justify-between w-full">
         {/* Left Section */}
         <div className="flex flex-col gap-12 lg:gap-[66px] w-full md:w-1/2">
@@ -214,11 +214,11 @@ const NewHero = () => {
           </div>
         </div>
         {/* Right Section */}
-        <div className="flex flex-col w-full md:w-1/2 relative">
+        <div className="flex flex-col w-full md:w-1/2 relative h-[300px] md:h-auto mb-4 md:md-0">
           <Image
             src={NewHeroImage}
             alt="Hero Coptera"
-            className=" w-full h-auto object-cover"
+            className="md:object-contain lg:object-cover"
             fill
             priority
             placeholder="blur"

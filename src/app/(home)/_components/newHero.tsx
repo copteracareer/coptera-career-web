@@ -218,7 +218,7 @@ const NewHero = () => {
           <Image
             src={NewHeroImage}
             alt="Hero Coptera"
-            className="md:object-contain lg:object-cover"
+            className="md:object-contain"
             fill
             priority
             placeholder="blur"

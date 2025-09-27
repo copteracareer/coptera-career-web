@@ -12,8 +12,12 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Coptera Career",
-  description: "Make your dream job come true",
+  title: "Coptera Career | Temukan Lowongan Kerja Terbaik di Indonesia",
+  description:
+    "Coptera Career membantu kamu mengembangkan karir dan menemukan lowongan kerja terbaru dari perusahaan terpercaya di Indonesia. Temukan peluang terbaik untuk meraih karir impianmu!",
+  verification: {
+    google: "RbpqRG45BYQKjhMqnnV9D9SRwzGH8Mqp9TnRhXoiCmg",
+  },
   icons: {
     icon: [
       { url: "/favicon/favicon.ico" },
@@ -33,6 +37,30 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/favicon/site.webmanifest",
+  openGraph: {
+    title: "Coptera Career | Temukan Lowongan Kerja Terbaik di Indonesia",
+    description:
+      "Coptera Career membantu kamu mengembangkan karir dan menemukan lowongan kerja terbaru dari perusahaan terpercaya di Indonesia. Temukan peluang terbaik untuk meraih karir impianmu!",
+    url: "https://career.coptera.id",
+    siteName: "Coptera Career",
+    images: [
+      {
+        url: "/img/logo/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Coptera Career - Lowongan Kerja",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Coptera Career | Temukan Lowongan Kerja Terbaik di Indonesia",
+    description:
+      "Coptera Career membantu kamu mengembangkan karir dan menemukan lowongan kerja terbaru dari perusahaan terpercaya di Indonesia. Temukan peluang terbaik untuk meraih karir impianmu!",
+    images: ["/img/logo/og-image.png"],
+  },
 };
 
 export default function RootLayout({

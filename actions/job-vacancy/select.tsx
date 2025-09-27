@@ -19,6 +19,10 @@ export const getJobVacancyById = async (id: number): Promise<JobVacancy> => {
     `${apiUrl}/api/job-vacancy/${id}`
   );
 
+  if (!response.data?.status) {
+    throw new Error(response.data?.message || "Job not found");
+  }
+
   return response.data.data;
 };
 
@@ -30,6 +34,7 @@ export interface JobVacancy {
   description: string;
   link: string;
   is_closed: boolean;
+  created_at: string;
   company_name: string;
   company_image: string;
   company: Company;

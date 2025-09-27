@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { getJobVacancies } from "../../../../../actions/job-vacancy";
 import { getJobVacancyById } from "../../../../../actions/job-vacancy/select";
@@ -22,6 +23,54 @@ export async function generateStaticParams() {
 
 // ✅ ISR (revalidate every 60s)
 export const revalidate = 60;
+
+/** small helper to strip HTML tags for description used in metadata/schema */
+function stripHtml(html?: string) {
+  if (!html) return "";
+  return html.replace(/<[^>]*>?/gm, "").trim();
+}
+
+/** small helper to build absolute URL for images (adjust base if needed) */
+function toAbsoluteImage(url?: string) {
+  if (!url) return null;
+  // if already absolute
+  if (/^https?:\/\//i.test(url)) return url;
+  // backend stores relative path like "uploads/..", prefix with API host
+  const base =
+    process.env.NEXT_PUBLIC_COPTERA_API?.replace(/\/api\/?$/, "") || "";
+  return base ? `${base}/${url.replace(/^\/+/, "")}` : url;
+}
+
+export async function generateMetadata({
+  params,
+}: JobDetailPageProps): Promise<Metadata> {
+  try {
+    const id = Number(params.id);
+    const job = await getJobVacancyById(id);
+    const desc = stripHtml(job.description).slice(0, 150);
+
+    const image = toAbsoluteImage(
+      job.company?.image || job.company_image || ""
+    );
+
+    return {
+      title: `${job.title} — ${job.company?.name || "Coptera Career"}`,
+      description: desc || "Cari lowongan pekerjaan terbaik di Coptera Career",
+      openGraph: {
+        title: `${job.title} — ${job.company?.name || "Coptera Career"}`,
+        description: desc,
+        url: `https://career.coptera.id/job/${id}`,
+        images: image ? [{ url: image }] : undefined,
+      },
+    };
+  } catch {
+    return {
+      title: "Lowongan Tidak Ditemukan — Coptera Career",
+      description: "Job not found",
+      robots: { index: false },
+    };
+  }
+}
 
 // ✅ The actual page
 export default async function JobDetailPage({ params }: JobDetailPageProps) {
@@ -71,25 +120,92 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
       "Report Lowongan Kerja"
     )}&body=career.coptera.id/job/${id}`;
 
-    if (!job) {
-      return (
-        <div className="container mx-auto p-4 my-[32px] md:my-[48px] lg:my-[72px] h-full flex flex-col items-center justify-center">
-          <div className="max-w-md text-center">
-            <h2 className="mb-8 font-extrabold text-9xl text-[#2060E9]">
-              <span className="sr-only">Error</span>404
-            </h2>
-            <p className="text-2xl font-semibold md:text-3xl mb-4">
-              Maaf, Halaman yang anda cari tidak ditemukan
-            </p>
-            <div className="bg-[#2060E9] text-white text-[16px] font-[600] rounded-md flex flex-row items-center content-center">
-              <Link href="/" className="p-3 font-semibold rounded m-auto">
-                Kembali ke Halaman Utama
-              </Link>
-            </div>
-          </div>
-        </div>
-      );
+    // if (!job) {
+    //   return (
+    //     <div className="container mx-auto p-4 my-[32px] md:my-[48px] lg:my-[72px] h-full flex flex-col items-center justify-center">
+    //       <div className="max-w-md text-center">
+    //         <h2 className="mb-8 font-extrabold text-9xl text-[#2060E9]">
+    //           <span className="sr-only">Error</span>404
+    //         </h2>
+    //         <p className="text-2xl font-semibold md:text-3xl mb-4">
+    //           Maaf, Halaman yang anda cari tidak ditemukan
+    //         </p>
+    //         <div className="bg-[#2060E9] text-white text-[16px] font-[600] rounded-md flex flex-row items-center content-center">
+    //           <Link href="/" className="p-3 font-semibold rounded m-auto">
+    //             Kembali ke Halaman Utama
+    //           </Link>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // }
+
+    // Build JSON-LD for JobPosting
+    const datePosted = job.created_at
+      ? new Date(job.created_at).toISOString()
+      : new Date().toISOString();
+    const validThrough = job.due_date
+      ? new Date(job.due_date).toISOString()
+      : undefined;
+
+    const hiringOrgLogo = toAbsoluteImage(
+      job.company?.image || job.company_image || ""
+    );
+    const hiringOrgUrl = job.company?.web || "https://career.coptera.id";
+
+    const baseSalary =
+      job.jobVacancySalary &&
+      (job.jobVacancySalary.minimum || job.jobVacancySalary.maximum)
+        ? {
+            "@type": "MonetaryAmount",
+            currency: job.jobVacancySalary.currency || "IDR",
+            value: {
+              "@type": "QuantitativeValue",
+              minValue: job.jobVacancySalary.minimum ?? undefined,
+              maxValue: job.jobVacancySalary.maximum ?? undefined,
+              unitText: job.jobVacancySalary.frequency || "MONTH",
+            },
+          }
+        : undefined;
+
+    const jobPostingSchema: Record<string, unknown> = {
+      "@context": "https://schema.org/",
+      "@type": "JobPosting",
+      title: job.title,
+      description: stripHtml(job.description),
+      datePosted,
+      hiringOrganization: {
+        "@type": "Organization",
+        name: job.company_name || job.company?.name || "Coptera Career",
+        sameAs: hiringOrgUrl,
+        logo: hiringOrgLogo || undefined,
+      },
+      jobLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: job.city?.name || undefined,
+          addressRegion: job.city?.province?.name || undefined,
+          addressCountry: "ID", // adjust if needed
+        },
+      },
+      employmentType: job.jobType?.name || job.work_type || undefined, // e.g. "Contract"
+      validThrough: validThrough || undefined,
+      baseSalary: baseSalary || undefined,
+      url: `https://career.coptera.id/job/${id}`,
+    };
+
+    // Clean undefined fields (makes JSON more compact)
+    function removeUndefined(obj: any) {
+      if (!obj || typeof obj !== "object") return obj;
+      Object.keys(obj).forEach((k) => {
+        if (obj[k] === undefined) delete obj[k];
+        else if (typeof obj[k] === "object") removeUndefined(obj[k]);
+      });
+      return obj;
     }
+
+    removeUndefined(jobPostingSchema);
 
     return (
       <div className="container mx-auto p-4 my-[32px] md:my-[48px] lg:my-[72px]">
@@ -416,6 +532,12 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             ))}
           </div>
         </div>
+        {/* JSON-LD injection for Google / structured data */}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+        />
       </div>
     );
   } catch (error) {

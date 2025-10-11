@@ -28,7 +28,7 @@ export const getJobVacancyById = async (id: number): Promise<JobVacancy> => {
 
 export interface JobVacancy {
   id: number;
-  work_type: string;
+  work_type: string | null;
   title: string;
   due_date: string | null;
   description: string;

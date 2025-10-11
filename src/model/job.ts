@@ -17,7 +17,7 @@ export interface Job {
 
 export interface JobVacancy {
   id: number;
-  work_type: string;
+  work_type: string | null;
   title: string;
   due_date: Date | null;
   description: string;

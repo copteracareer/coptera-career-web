@@ -49,6 +49,11 @@ export default function Navbar() {
                 Pasang Loker
               </NavigationMenuLink>
             </Link>
+            <Link href="https://goakal.com/coptera-academy" target="_blank">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Coptera Academy
+              </NavigationMenuLink>
+            </Link>
             {/* <Link href="/accelelator" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Career Accelerator
@@ -114,6 +119,14 @@ export default function Navbar() {
             onClick={() => setMenuOpen(false)}
           >
             Pasang Loker
+          </Link>
+          <Link
+            href="https://goakal.com/coptera-academy"
+            target="_blank"
+            className="block py-2 text-sm font-medium text-gray-700 w-full"
+            onClick={() => setMenuOpen(false)}
+          >
+            Coptera Academy
           </Link>
           {/* <Link
             href="/docs"

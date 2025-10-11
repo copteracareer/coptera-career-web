@@ -1,8 +1,21 @@
-export async function getOptions(
-  endpoint: string
-): Promise<{ id: number; name: string }[]> {
+export async function getOptions<T = { id: number; name: string }>(
+  endpoint: string,
+  params?: Record<string, string | number | boolean | undefined>
+): Promise<T[]> {
   const API_BASE = "https://api.career.coptera.id/api";
-  const res = await fetch(`${API_BASE}/${endpoint}`);
+  const query = params
+    ? "?" +
+      Object.entries(params)
+        .filter(([_, v]) => v !== undefined && v !== null)
+        .map(
+          ([k, v]) =>
+            `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`
+        )
+        .join("&")
+    : "";
+  const res = await fetch(`${API_BASE}/${endpoint}${query}`, {
+    next: { revalidate: 3600 },
+  });
   if (!res.ok) {
     throw new Error(`Failed to fetch ${endpoint}`);
   }
@@ -10,7 +23,7 @@ export async function getOptions(
   if (!json.status) {
     throw new Error(json.message);
   }
-  return json.data.data;
+  return json.data.data as T[];
 }
 
 export async function createOption(
@@ -78,8 +91,12 @@ export function getCompanyTypes() {
   return getOptions("company-type");
 }
 
-export function getPartners() {
-  return getOptions("partner");
+export function getPartners(order = "DESC") {
+  return getOptions("partner", { order });
+}
+
+export function getTestimonials(order = "DESC", limit = 4) {
+  return getOptions("testimonial", { order, limit, is_show: 1 });
 }
 
 // CREATE

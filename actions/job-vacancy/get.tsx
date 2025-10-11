@@ -21,6 +21,7 @@ const getJobVacancies = async (
   filters?: JobFilterParams
 ): Promise<JobVacancy[]> => {
   const params = new URLSearchParams();
+  params.set("order", "DESC");
   if (filters?.job_experience_id?.length) {
     params.set("job_experience_id", filters.job_experience_id.join(","));
   }

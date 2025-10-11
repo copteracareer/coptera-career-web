@@ -78,6 +78,10 @@ export function getCompanyTypes() {
   return getOptions("company-type");
 }
 
+export function getPartners() {
+  return getOptions("partner");
+}
+
 // CREATE
 export function createJobExperiences(name: string) {
   return createOption("job-experience", { name });

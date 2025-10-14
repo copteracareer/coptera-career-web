@@ -94,6 +94,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
       work_type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
       due_date: job.due_date ? new Date(job.due_date) : null,
       description: job.description || "No description available",
+      is_send_email: job.is_send_email,
       link: job.link || "#",
       is_closed: job.is_closed,
       jobVacancyFacilities: [],
@@ -361,7 +362,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             <div className="flex shrink-0">
               <Link
                 href={
-                  job.company && job.company.user?.email
+                  job.is_send_email && job.company && job.company.user?.email
                     ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
                         job.company.user.email
                       )}`
@@ -510,6 +511,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                   type: job.type || "Unknown Type",
                   experience: job.experience || "No experience specified",
                   description: job.description || "No description available",
+                  is_send_email: job.is_send_email,
                   link: job.link || "#",
                   salary:
                     job.jobVacancySalary &&

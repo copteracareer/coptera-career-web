@@ -289,7 +289,7 @@ export default function JobCard({ job }: { job: any }) {
           <div className="lg:col-span-4 flex flex-col gap-4 p-4 bg-gray-50 rounded-xl shadow-sm">
             <Link
               href={
-                job.company_email
+                job.is_send_email && job.company_email
                   ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
                       job.company_email
                     )}`

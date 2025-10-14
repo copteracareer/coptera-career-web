@@ -4,6 +4,7 @@ export interface Job {
   title: string;
   due_date: Date | null;
   description: string;
+  is_send_email: boolean;
   link: string;
   is_closed: boolean;
   company: Company;
@@ -21,6 +22,7 @@ export interface JobVacancy {
   title: string;
   due_date: Date | null;
   description: string;
+  is_send_email: boolean;
   link: string;
   is_closed: boolean;
   company: Company;

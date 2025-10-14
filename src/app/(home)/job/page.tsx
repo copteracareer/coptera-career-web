@@ -33,6 +33,7 @@ export default async function JobPage(props: {
     work_type: job.jobType ? job.jobType.name || "Unknown" : "Unknown",
     due_date: job.due_date ? new Date(job.due_date) : null,
     description: job.description || "No description available",
+    is_send_email: job.is_send_email,
     link: job.link || "#",
     is_closed: job.is_closed,
     jobVacancyFacilities: [],

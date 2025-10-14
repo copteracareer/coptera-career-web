@@ -29,6 +29,7 @@ export default function JobList({ jobs }: JobListProps) {
               ? job.jobExperience.name
               : "No experience specified",
             description: job.description || "No description available",
+            is_send_email: job.is_send_email,
             link: job.link || "#",
             salary:
               job.jobVacancySalary && job.jobVacancySalary.minimum !== undefined

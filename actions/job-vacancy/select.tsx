@@ -32,6 +32,7 @@ export interface JobVacancy {
   title: string;
   due_date: string | null;
   description: string;
+  is_send_email: boolean;
   link: string;
   is_closed: boolean;
   created_at: string;

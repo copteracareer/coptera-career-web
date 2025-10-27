@@ -63,6 +63,14 @@ export async function createOption(
   return json.data;
 }
 
+interface Testimonial {
+  id: number;
+  name: string;
+  image?: string;
+  position: string;
+  description: string;
+}
+
 export function getJobExperiences() {
   return getOptions("job-experience");
 }
@@ -96,7 +104,7 @@ export function getPartners(order = "DESC") {
 }
 
 export function getTestimonials(order = "DESC", limit = 4) {
-  return getOptions("testimonial", { order, limit, is_show: 1 });
+  return getOptions<Testimonial>("testimonial", { order, limit, is_show: 1 });
 }
 
 // CREATE

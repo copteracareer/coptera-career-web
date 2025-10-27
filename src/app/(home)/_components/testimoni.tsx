@@ -18,20 +18,28 @@ const Testimoni = async () => {
               key={testimoni.id}
               className="bg-white rounded-[10px] px-[22px] py-[39px] gap-[10px] flex flex-col space-y-4 md:space-y-8"
             >
-              <p className="font-normal text-base text-[#0A0A0A] text-justify">
+              <p className="font-normal text-base text-[#0A0A0A] text-justify md:h-[120px] lg:h-[180px] overflow-auto">
                 {testimoni.description}
               </p>
               <div className="flex flex-row space-x-4 items-center mt-auto">
-                <div
-                  className="h-[58px] w-[58px] border border-[#155DFC] rounded-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url(${
-                      testimoni.image?.startsWith("http")
-                        ? testimoni.image
-                        : `${process.env.NEXT_PUBLIC_COPTERA_API}/${testimoni.image}`
-                    })`,
-                  }}
-                ></div>
+                {testimoni.image ? (
+                  <div
+                    className="h-[58px] w-[58px] border border-[#155DFC] rounded-full bg-cover bg-center"
+                    style={{
+                      backgroundImage: `url(${
+                        testimoni.image?.startsWith("http")
+                          ? testimoni.image
+                          : `${process.env.NEXT_PUBLIC_COPTERA_API}/${testimoni.image}`
+                      })`,
+                    }}
+                  ></div>
+                ) : (
+                  <div className="w-[58px] h-[58px] bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold">
+                      {testimoni.name.charAt(0)}
+                    </span>
+                  </div>
+                )}
                 <div className="flex flex-col space-y-1">
                   <p className="text-base md:text-lg lg:text-xl text-[#0A0A0A] font-medium">
                     {testimoni.name}

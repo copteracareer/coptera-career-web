@@ -14,7 +14,7 @@ export async function getOptions<T = { id: number; name: string }>(
         .join("&")
     : "";
   const res = await fetch(`${API_BASE}/${endpoint}${query}`, {
-    next: { revalidate: 3600 },
+    cache: "no-store",
   });
   if (!res.ok) {
     throw new Error(`Failed to fetch ${endpoint}`);

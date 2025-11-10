@@ -68,8 +68,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Coptera",
+    url: "https://career.coptera.id",
+    logo: "https://career.coptera.id/img/logo/og-image.png",
+    sameAs: [
+      "https://www.linkedin.com/company/coptera",
+      "https://www.instagram.com/copteracareer",
+    ],
+    department: {
+      "@type": "Organization",
+      name: "Coptera Career",
+      url: "https://career.coptera.id",
+      description:
+        "Platform resmi untuk menemukan lowongan kerja dan membangun karier bersama Coptera di Indonesia.",
+    },
+  };
+
   return (
     <html lang="en">
+      <head>
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${poppins.variable} antialiased`}>
         <QueryClientWrapper> {children} </QueryClientWrapper>
         <Analytics />

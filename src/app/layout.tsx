@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "Coptera Career | Temukan Lowongan Kerja Terbaik di Indonesia",
   description:
     "Coptera Career membantu kamu mengembangkan karir dan menemukan lowongan kerja terbaru dari perusahaan terpercaya di Indonesia. Temukan peluang terbaik untuk meraih karir impianmu!",
+  alternates: {
+    canonical: "https://career.coptera.id",
+  },
   verification: {
     google: "RbpqRG45BYQKjhMqnnV9D9SRwzGH8Mqp9TnRhXoiCmg",
   },

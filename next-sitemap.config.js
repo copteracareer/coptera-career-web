@@ -6,8 +6,12 @@ module.exports = {
   changefreq: "daily",
   priority: 0.7,
   transform: async (config, path) => {
+    const base = String(config.siteUrl).replace(/\/$/, "");
+    // if your site redirects "/" -> "/home", emit the final URL
+    const finalPath = path === "/" ? "/home" : path;
+    const loc = `${base}${finalPath}`;
     return {
-      loc: path,
+      loc,
       changefreq: config.changefreq,
       priority: config.priority,
       lastmod: new Date().toISOString(),
@@ -19,9 +23,10 @@ module.exports = {
     );
     const data = await res.json();
 
+    const base = String(config.siteUrl).replace(/\/$/, "");
     const jobUrls = data.data.data.map((job) => {
       return {
-        loc: `/job/${job.id}`,
+        loc: `${base}/job/${job.id}`,
         changefreq: "daily",
         priority: 0.8,
         lastmod: new Date(job.updated_at || job.created_at).toISOString(),

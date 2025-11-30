@@ -39,7 +39,7 @@ export default function Navbar() {
                 Lowongan Kerja
               </NavigationMenuLink>
             </Link>
-            <Link href="/home#testimoni" legacyBehavior passHref>
+            <Link href="/#testimoni" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Testimoni
               </NavigationMenuLink>
@@ -106,7 +106,7 @@ export default function Navbar() {
             Lowongan Kerja
           </Link>
           <Link
-            href="/home#testimoni"
+            href="/#testimoni"
             className="block py-2 text-sm font-medium text-gray-700 w-full"
             onClick={() => setMenuOpen(false)}
           >

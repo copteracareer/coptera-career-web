@@ -78,7 +78,7 @@ const Footer = () => {
             </Link>
             <Link
               className="flex flex-row space-x-2 text-sm"
-              href="/home#testimoni"
+              href="/#testimoni"
             >
               <div className="h-6 w-6 flex items-center">
                 <img

@@ -6,12 +6,8 @@ module.exports = {
   changefreq: "daily",
   priority: 0.7,
   transform: async (config, path) => {
-    const base = String(config.siteUrl).replace(/\/$/, "");
-    // if your site redirects "/" -> "/home", emit the final URL
-    const finalPath = path === "/" ? "/home" : path;
-    const loc = `${base}${finalPath}`;
     return {
-      loc,
+      loc: path,
       changefreq: config.changefreq,
       priority: config.priority,
       lastmod: new Date().toISOString(),

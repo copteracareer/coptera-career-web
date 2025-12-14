@@ -15,7 +15,7 @@ const PostJob = () => {
               <br />
               Sekarang bisa! Cukup isi form yang tersedia dan loker Anda akan
               tayang untuk menjangkau ribuan pencari kerja aktif di seluruh
-              Indonesia.
+              Indonesia melalui Coptera Career.
               <br />
               Caranya mudah: klik tombol di bawah, isi form nya, dan selesai
               loker Anda siap ditemukan kandidat terbaik.
@@ -26,22 +26,23 @@ const PostJob = () => {
           </div>
 
           <div className="flex justify-center md:justify-start">
-            <button className="w-auto rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm md:text-base lg:text-lg font-medium py-4 px-[50px]">
-              <a
-                href="https://S.id/copterapostingloker"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Pasang Lowongan Gratis
-              </a>
-            </button>
+            <a
+              href="https://S.id/copterapostingloker"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg bg-blue-600 hover:bg-blue-700
+             text-white text-sm md:text-base lg:text-lg
+             font-medium py-4 px-[50px]"
+            >
+              Pasang Lowongan Gratis
+            </a>
           </div>
         </div>
         {/* Right Section */}
         <div className="flex flex-col w-full md:w-1/2">
           <Image
             src="/img/figma-assets/PostJob.png"
-            alt="Post a Job"
+            alt="Posting lowongan kerja gratis di Coptera Career"
             className="rounded-[10px] w-full h-auto"
             width={512}
             height={377}

@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "Coptera Career",
     images: [
       {
-        url: "/img/logo/og-image.png",
+        url: "https://career.coptera.id/img/logo/og-image.png",
         width: 1200,
         height: 630,
         alt: "Coptera Career - Lowongan Kerja",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "Coptera Career | Temukan Lowongan Kerja Terbaik di Indonesia",
     description:
       "Coptera Career membantu kamu mengembangkan karir dan menemukan lowongan kerja terbaru dari perusahaan terpercaya di Indonesia. Temukan peluang terbaik untuk meraih karir impianmu!",
-    images: ["/img/logo/og-image.png"],
+    images: ["https://career.coptera.id/img/logo/og-image.png"],
   },
 };
 

@@ -1,18 +1,25 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import JobCard from "../job/_components/jobCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { JobVacancy, JobClassification } from "@/model/job";
 import { getJobVacancies } from "../../../../actions/job-vacancy";
 import { timeAgo } from "@/utils/helper";
-import { getJobClassifications } from "../../../../actions/options";
 
-export default function Jobs() {
-  const [jobs, setJobs] = useState<JobVacancy[]>([]);
+type Props = {
+  initialJobs: JobVacancy[];
+  initialJobClassifications: JobClassification[];
+};
+
+export default function JobsClient({
+  initialJobs,
+  initialJobClassifications,
+}: Props) {
+  const [jobs, setJobs] = useState<JobVacancy[]>(initialJobs);
   const [jobClassifications, setJobClassifications] = useState<
     JobClassification[]
-  >([]);
+  >(initialJobClassifications);
   const [filterClassification, setFilterClassification] = useState<
     number | null
   >(null);
@@ -67,21 +74,6 @@ export default function Jobs() {
       console.error("Gagal mengambil data pekerjaan:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchJobClassifications = async () => {
-      try {
-        const jobClassifications = await getJobClassifications();
-
-        if (Array.isArray(jobClassifications)) {
-          setJobClassifications(jobClassifications);
-        }
-      } catch (error) {}
-    };
-
-    fetchJobs();
-    fetchJobClassifications();
-  }, []);
 
   const handleClassificationClick = (classificationId: number | null) => {
     setFilterClassification(classificationId);

@@ -105,8 +105,8 @@ const NewHero = () => {
               #RaihKarirImpianmu
             </p>
             <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-[#2060E9]  lg:leading-[74px] tracking-[-2%]">
-              Temukan peluang terbaikmu di{" "}
-              <span className="text-[#F1BC52]">Coptera career!</span>
+              Temukan Lowongan Kerja yang Tepat Bersama{" "}
+              <span className="text-[#F1BC52]">Coptera Career!</span>
             </h1>
           </div>
 
@@ -217,7 +217,7 @@ const NewHero = () => {
         <div className="flex flex-col w-full md:w-1/2 relative h-[300px] md:h-auto mb-4 md:md-0">
           <Image
             src={NewHeroImage}
-            alt="Hero Coptera"
+            alt="Coptera Career Job Portal Indonesia"
             className="md:object-contain"
             fill
             priority

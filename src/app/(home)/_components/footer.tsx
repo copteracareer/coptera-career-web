@@ -9,18 +9,22 @@ const Footer = () => {
       <div className="flex flex-col lg:flex-row justify-between gap-8">
         {/* Left Section */}
         <div className="flex-1">
-          <Image
-            src="/img/logo/brand-new.png"
-            alt="Logo"
-            className="mr-1"
-            width={211}
-            height={34}
-          />
+          <Link className="flex mr-1" href="/">
+            <Image
+              src="/img/logo/brand-new.png"
+              alt="Logo"
+              width={211}
+              height={34}
+            />
+          </Link>
           <p className="text-sm mt-3">
-            Coptera Career adalah informasi lowongan kerja dan <br />
-            tips &amp; trik untuk pengembangan karir.
+            <strong>Coptera Career</strong> adalah platform lowongan kerja di
+            Indonesia yang membantu pencari kerja menemukan peluang karier di
+            berbagai industri, mulai dari teknologi hingga non-IT. Temukan
+            informasi lowongan terbaru dan bangun karier lebih terarah melalui
+            Coptera Career.
           </p>
-          <div className="flex items-center gap-4 mt-8">
+          <div className="flex items-center gap-4 mt-4">
             <a
               href="https://www.instagram.com/copteracareer/"
               target="_blank"

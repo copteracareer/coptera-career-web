@@ -18,9 +18,9 @@ const Partner = async () => {
   return (
     <div className="wrapper bg-[#DBEAFE] px-4 py-[46px] sm:px-10 lg:px-20">
       <div className="flex flex-col space-y-4 md:space-y-6 lg:space-y-8">
-        <p className="font-semibold text-[#155DFC] text-base md:text-lg lg:text-xl text-center">
-          Perusahaan yang telah pasang loker disini
-        </p>
+        <h2 className="font-semibold text-[#155DFC] text-base md:text-lg lg:text-xl text-center">
+          Perusahaan yang Telah Memasang Lowongan di Coptera Career
+        </h2>
         {/* Row 1 → moving right */}
         <div className="overflow-hidden">
           <div className="flex animate-marquee-right space-x-6">
@@ -36,6 +36,7 @@ const Partner = async () => {
                   className="flex-shrink-0 flex justify-center items-center p-5 w-40 h-[85px]
                              bg-[rgba(245,245,245,0.6)] border border-white/70
                              backdrop-blur-[17.5px] rounded-[10px]"
+                  aria-label={`Logo perusahaan ${partner.name}`}
                 >
                   <div
                     className="w-full h-full bg-contain bg-no-repeat bg-center opacity-85"
@@ -75,6 +76,7 @@ const Partner = async () => {
                   className="flex-shrink-0 flex justify-center items-center p-5 w-40 h-[85px]
                              bg-[rgba(245,245,245,0.6)] border border-white/70
                              backdrop-blur-[17.5px] rounded-[10px]"
+                  aria-label={`Logo perusahaan ${partner.name}`}
                 >
                   <div
                     className="w-full h-full bg-contain bg-no-repeat bg-center opacity-85"

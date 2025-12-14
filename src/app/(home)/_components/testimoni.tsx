@@ -9,9 +9,9 @@ const Testimoni = async () => {
       id="testimoni"
     >
       <div className="flex flex-col space-y-4 md:space-y-6 lg:space-y-8">
-        <p className="font-semibold text-white text-base md:text-lg lg:text-xl text-center lg:text-left">
+        <h2 className="font-semibold text-white text-base md:text-lg lg:text-xl text-center lg:text-left">
           Beberapa Testimoni Dari Para Job Seeker
-        </p>
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 w-full">
           {testimonials.map((testimoni, index) => (
             <div
